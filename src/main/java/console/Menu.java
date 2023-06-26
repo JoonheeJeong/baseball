@@ -1,9 +1,10 @@
 package console;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import console.CommandMapper.*;
+import exception.IllegalCommandException;
+import exception.IllegalParameterException;
+
+import java.util.*;
 
 /**
  * 컨트롤러 역할을 대신하므로,
@@ -12,36 +13,28 @@ import java.util.StringTokenizer;
  */
 public class Menu {
     private static Menu instance;
-    private final Map<String, CommandMapper> commandMapperMap;
     private final BaseBallService baseballService = new BaseBallService();
-
+    private final Map<String, CommandMapper> commandMapperMap;
     private final Scanner scanner = new Scanner(System.in);
-    private final String[] commandList = {"야구장등록", "야구장목록", "팀등록", "팀목록", "선수등록", "선수목록", "퇴출등록", "퇴출목록", "포지션별목록"};
 
     private Menu() {
         this.commandMapperMap = new HashMap<>();
-        commandMapperMap.put("야구장등록", new RegisterStadiumCommandMapper(baseballService));
-        commandMapperMap.put("팀등록", new RegisterTeamCommandMapper(baseballService));
-        commandMapperMap.put("선수등록", new RegisterPlayerCommandMapper(baseballService));
-        commandMapperMap.put("퇴출등록", new RegisterOutPlayerCommandMapper(baseballService));
-        commandMapperMap.put("야구장목록", new ShowStadiumCommandMapper(baseballService));
-        commandMapperMap.put("팀목록", new ShowTeamCommandMapper(baseballService));
-        commandMapperMap.put("선수목록", new ShowPlayerCommandMapper(baseballService));
-        commandMapperMap.put("퇴출목록", new ShowOutPlayerCommandMapper(baseballService));
-        commandMapperMap.put("포지션별목록", new ShowPositionPlayerCommandMapper(baseballService));
-    }
-
-    public static Menu getInstance() {
-        if (instance == null) {
-            instance = new Menu();
-        }
-        return instance;
+        commandMapperMap.put(RegisterStadiumCommandMapper.name, new RegisterStadiumCommandMapper(baseballService));
+        commandMapperMap.put(RegisterStadiumCommandMapper.name, new RegisterTeamCommandMapper(baseballService));
+        commandMapperMap.put(RegisterPlayerCommandMapper.name, new RegisterPlayerCommandMapper(baseballService));
+        commandMapperMap.put(RegisterOutPlayerCommandMapper.name, new RegisterOutPlayerCommandMapper(baseballService));
+        commandMapperMap.put(ShowStadiumCommandMapper.name, new ShowStadiumCommandMapper(baseballService));
+        commandMapperMap.put(ShowTeamCommandMapper.name, new ShowTeamCommandMapper(baseballService));
+        commandMapperMap.put(ShowTeamCommandMapper.name, new ShowPlayerCommandMapper(baseballService));
+        commandMapperMap.put(ShowOutPlayerCommandMapper.name, new ShowOutPlayerCommandMapper(baseballService));
+        commandMapperMap.put(ShowPositionPlayerCommandMapper.name, new ShowPositionPlayerCommandMapper(baseballService));
     }
 
     private void parser(String request) throws IllegalArgumentException{
         StringTokenizer getCommandToken = new StringTokenizer(request, "?");
         String command = getCommandToken.nextToken();
         validateCommand(command);
+
         HashMap<String, String> map = new HashMap<>();
         if (getCommandToken.hasMoreTokens()) {
             String parameterSet = getCommandToken.nextToken();
@@ -56,37 +49,37 @@ public class Menu {
         }
 
         CommandMapper commandMapper = commandMapperMap.get(command);
-        if (commandMapper != null) {
-            commandMapper.mapCommand(command, map);
-        } else {
-            throw new NullPointerException();
-        }
+        commandMapper.mapCommand(command, map);
     }
 
-    private boolean validateCommand(String command) {
-        for (int i = 0; i < commandList.length; i++) {
-            if (command.equals(commandList[i])) return true;
+    private boolean validateCommand(String command) throws IllegalCommandException{
+        if (!commandMapperMap.containsKey(command)) {
+            throw new IllegalCommandException("알맞은 요청형식이 아닙니다.");
         }
-        //커스텀 익셉션
-        throw new IllegalArgumentException();
+        return true;
+    }
+
+    public static Menu getInstance() {
+        if (instance == null) {
+            instance = new Menu();
+        }
+        return instance;
     }
 
     public void consoleMenu() {
         while (true) {
             try {
-                System.out.println("===============================");
-                for (String s : commandList) {
-                    System.out.println("- " + s);
-                }
-                System.out.println("===============================");
                 System.out.println("어떤 기능을 요청하시겠습니까?");
-
                 String request = scanner.nextLine();
                 parser(request);
 
                 if (scanner.equals("종료")) break;
-            } catch (IllegalArgumentException e) {
-                System.err.println("잘못된 기능의 이름입니다.");
+            } catch (IllegalCommandException e) {
+                System.err.println(e.getMessage());
+            } catch (IllegalParameterException e) {
+                System.err.println(e.getMessage());
+            } catch (NoSuchElementException e) {
+                System.err.println("입력되지 않은 값이 있습니다.");
             }
         }
     }
