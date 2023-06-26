@@ -12,12 +12,23 @@ import java.util.StringTokenizer;
  */
 public class Menu {
     private static Menu instance;
+    private final Map<String, CommandMapper> commandMapperMap;
+    private final BaseBallService baseballService = new BaseBallService();
 
     private final Scanner scanner = new Scanner(System.in);
     private final String[] commandList = {"야구장등록", "야구장목록", "팀등록", "팀목록", "선수등록", "선수목록", "퇴출등록", "퇴출목록", "포지션별목록"};
 
     private Menu() {
-
+        this.commandMapperMap = new HashMap<>();
+        commandMapperMap.put("야구장등록", new RegisterStadiumCommandMapper(baseballService));
+        commandMapperMap.put("팀등록", new RegisterTeamCommandMapper(baseballService));
+        commandMapperMap.put("선수등록", new RegisterPlayerCommandMapper(baseballService));
+        commandMapperMap.put("퇴출등록", new RegisterOutPlayerCommandMapper(baseballService));
+        commandMapperMap.put("야구장목록", new ShowStadiumCommandMapper(baseballService));
+        commandMapperMap.put("팀목록", new ShowTeamCommandMapper(baseballService));
+        commandMapperMap.put("선수목록", new ShowPlayerCommandMapper(baseballService));
+        commandMapperMap.put("퇴출목록", new ShowOutPlayerCommandMapper(baseballService));
+        commandMapperMap.put("포지션별목록", new ShowPositionPlayerCommandMapper(baseballService));
     }
 
     public static Menu getInstance() {
@@ -43,55 +54,12 @@ public class Menu {
                 map.put(key, value);
             }
         }
-        mapper(command, map);
-    }
 
-    private void mapper(String command, Map<String, String> map) {
-        if (command.equals(commandList[0])) {
-            /*
-            TODO : baseBallService.registerStadium(map);
-             */
-            System.out.println(command + "\n" + map);
-        } else if (command.equals(commandList[1])) {
-            /*
-            TODO : baseBallService.showStadiumList;
-             */
-            System.out.println(command);
-        } else if (command.equals(commandList[2])) {
-            /*
-            TODO : baseBallService.registerTeam(map);
-             */
-            System.out.println(command + "\n" + map);
-        } else if (command.equals(commandList[3])) {
-            /*
-            TODO : baseBallService.showTeamList();
-             */
-            System.out.println(command);
-        } else if (command.equals(commandList[4])) {
-            /*
-            TODO : baseBallService.registerPlayer(map);
-             */
-            System.out.println(command + "\n" + map);
-        } else if (command.equals(commandList[5])) {
-            /*
-            TODO : baseBallService.showPlayerList(map);
-             */
-            System.out.println(command + "\n" + map);
-        } else if (command.equals(commandList[6])) {
-            /*
-            TODO : baseBallService.registerOutPlayer(map);
-             */
-            System.out.println(command + "\n" + map);
-        } else if (command.equals(commandList[7])) {
-            /*
-            TODO : baseBallService.showOutPlayerList();
-             */
-            System.out.println(command);
-        } else if (command.equals(commandList[8])) {
-            /*
-            TODO : baseBallService.PositionPlayerList();
-             */
-            System.out.println(command);
+        CommandMapper commandMapper = commandMapperMap.get(command);
+        if (commandMapper != null) {
+            commandMapper.mapCommand(command, map);
+        } else {
+            throw new NullPointerException();
         }
     }
 
