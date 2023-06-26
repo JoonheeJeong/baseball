@@ -1,10 +1,12 @@
-package domain;
+package model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @Getter
+@ToString
 public enum Reason {
     RETIRE("은퇴"),
     INJURED("부상"),
