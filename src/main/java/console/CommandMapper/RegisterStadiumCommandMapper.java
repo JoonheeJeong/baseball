@@ -1,6 +1,6 @@
 package console.CommandMapper;
 
-import console.BaseBallService;
+import service.BaseBallService;
 import exception.IllegalParameterException;
 
 import java.util.HashMap;
@@ -16,9 +16,7 @@ public class RegisterStadiumCommandMapper implements CommandMapper {
     @Override
     public void mapCommand(String command, HashMap<String, String> map) throws IllegalParameterException {
         if (map.containsKey("name")) {
-            /*
-            TODO : baseBallService.registerStadium(map);
-            */
+            baseBallService.register(map);
         } else {
             throw new IllegalParameterException("알맞은 파라미터 형식이 아닙니다.");
         }
