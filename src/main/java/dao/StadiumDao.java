@@ -42,6 +42,10 @@ public class StadiumDao {
         session.rollback();
     }
 
+    public void commit() {
+        session.commit();
+    }
+
     private void manageNewSession() {
         session.close();
         session = sqlSessionFactory.openSession();
