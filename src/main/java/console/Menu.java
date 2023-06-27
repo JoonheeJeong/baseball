@@ -3,6 +3,7 @@ package console;
 import console.CommandMapper.*;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import service.StadiumService;
 
 import java.util.*;
 
@@ -13,22 +14,22 @@ import java.util.*;
  */
 public class Menu {
     private static Menu instance;
-    private final BaseBallService baseballService = new BaseBallService();
+    private service.BaseBallService baseBallService;
     private final Map<String, CommandMapper> commandMapperMap;
     private static HashMap<String, String> map = new HashMap<>();
     private final Scanner scanner = new Scanner(System.in);
 
     private Menu() {
         this.commandMapperMap = new HashMap<>();
-        commandMapperMap.put(RegisterStadiumCommandMapper.name, new RegisterStadiumCommandMapper(baseballService));
-        commandMapperMap.put(RegisterTeamCommandMapper.name, new RegisterTeamCommandMapper(baseballService));
-        commandMapperMap.put(RegisterPlayerCommandMapper.name, new RegisterPlayerCommandMapper(baseballService));
-        commandMapperMap.put(RegisterOutPlayerCommandMapper.name, new RegisterOutPlayerCommandMapper(baseballService));
-        commandMapperMap.put(ShowStadiumCommandMapper.name, new ShowStadiumCommandMapper(baseballService));
-        commandMapperMap.put(ShowTeamCommandMapper.name, new ShowTeamCommandMapper(baseballService));
-        commandMapperMap.put(ShowPlayerCommandMapper.name, new ShowPlayerCommandMapper(baseballService));
-        commandMapperMap.put(ShowOutPlayerCommandMapper.name, new ShowOutPlayerCommandMapper(baseballService));
-        commandMapperMap.put(ShowPositionPlayerCommandMapper.name, new ShowPositionPlayerCommandMapper(baseballService));
+        commandMapperMap.put(RegisterStadiumCommandMapper.name, new RegisterStadiumCommandMapper(baseBallService = new StadiumService()));
+        commandMapperMap.put(RegisterTeamCommandMapper.name, new RegisterTeamCommandMapper(baseBallService));
+        commandMapperMap.put(RegisterPlayerCommandMapper.name, new RegisterPlayerCommandMapper(baseBallService));
+        commandMapperMap.put(RegisterOutPlayerCommandMapper.name, new RegisterOutPlayerCommandMapper(baseBallService));
+        commandMapperMap.put(ShowStadiumCommandMapper.name, new ShowStadiumCommandMapper(baseBallService = new StadiumService()));
+        commandMapperMap.put(ShowTeamCommandMapper.name, new ShowTeamCommandMapper(baseBallService));
+        commandMapperMap.put(ShowPlayerCommandMapper.name, new ShowPlayerCommandMapper(baseBallService));
+        commandMapperMap.put(ShowOutPlayerCommandMapper.name, new ShowOutPlayerCommandMapper(baseBallService));
+        commandMapperMap.put(ShowPositionPlayerCommandMapper.name, new ShowPositionPlayerCommandMapper(baseBallService));
     }
 
     private void parser(String request) throws IllegalParameterException, IllegalCommandException {

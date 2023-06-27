@@ -1,7 +1,7 @@
 package console.CommandMapper;
 
-import console.BaseBallService;
 import exception.IllegalParameterException;
+import service.BaseBallService;
 
 import java.util.HashMap;
 
@@ -15,8 +15,6 @@ public class ShowStadiumCommandMapper implements CommandMapper {
 
     @Override
     public void mapCommand(String command, HashMap<String, String> map) throws IllegalParameterException {
-        /*
-            TODO : baseBallService.showStadiumList;
-        */
+        baseBallService.show();
     }
 }
