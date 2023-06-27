@@ -2,12 +2,11 @@ package dao;
 
 import domain.Team;
 import mapper.TeamMapper;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 
-public class TeamDao {
+public class TeamDao extends AbstractMybatisDao {
 
     private static final TeamDao INSTANCE = new TeamDao();
 
@@ -15,9 +14,6 @@ public class TeamDao {
     }
 
     public static TeamDao getInstance() { return INSTANCE; }
-
-    private SqlSessionFactory sqlSessionFactory;
-    private SqlSession session;
 
     public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
         this.sqlSessionFactory = sqlSessionFactory;
@@ -36,14 +32,5 @@ public class TeamDao {
     public List<Team> selectAll() {
         TeamMapper mapper = session.getMapper(TeamMapper.class);
         return mapper.selectAll();
-    }
-
-    public void rollback() {
-        session.rollback();
-    }
-
-    private void manageNewSession() {
-        session.close();
-        session = sqlSessionFactory.openSession();
     }
 }
