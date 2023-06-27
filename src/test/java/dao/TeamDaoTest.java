@@ -39,9 +39,9 @@ public class TeamDaoTest {
 
         teamDao.insert(team, true);
 
-//        assertTrue(teamDao.selectAll().stream()
-//                        .map(Team::getName)
-//                        .anyMatch(name -> name.equals(teamName)));
+        assertTrue(teamDao.selectAll().stream()
+                        .map(Team::getName)
+                        .anyMatch(name -> name.equals(teamName)));
 
         teamDao.rollback();
     }
