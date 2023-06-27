@@ -15,27 +15,28 @@ public class Menu {
     private static Menu instance;
     private final BaseBallService baseballService = new BaseBallService();
     private final Map<String, CommandMapper> commandMapperMap;
+    private static HashMap<String, String> map = new HashMap<>();
     private final Scanner scanner = new Scanner(System.in);
 
     private Menu() {
         this.commandMapperMap = new HashMap<>();
         commandMapperMap.put(RegisterStadiumCommandMapper.name, new RegisterStadiumCommandMapper(baseballService));
-        commandMapperMap.put(RegisterStadiumCommandMapper.name, new RegisterTeamCommandMapper(baseballService));
+        commandMapperMap.put(RegisterTeamCommandMapper.name, new RegisterTeamCommandMapper(baseballService));
         commandMapperMap.put(RegisterPlayerCommandMapper.name, new RegisterPlayerCommandMapper(baseballService));
         commandMapperMap.put(RegisterOutPlayerCommandMapper.name, new RegisterOutPlayerCommandMapper(baseballService));
         commandMapperMap.put(ShowStadiumCommandMapper.name, new ShowStadiumCommandMapper(baseballService));
         commandMapperMap.put(ShowTeamCommandMapper.name, new ShowTeamCommandMapper(baseballService));
-        commandMapperMap.put(ShowTeamCommandMapper.name, new ShowPlayerCommandMapper(baseballService));
+        commandMapperMap.put(ShowPlayerCommandMapper.name, new ShowPlayerCommandMapper(baseballService));
         commandMapperMap.put(ShowOutPlayerCommandMapper.name, new ShowOutPlayerCommandMapper(baseballService));
         commandMapperMap.put(ShowPositionPlayerCommandMapper.name, new ShowPositionPlayerCommandMapper(baseballService));
     }
 
-    private void parser(String request) throws IllegalArgumentException{
+    private void parser(String request) throws IllegalParameterException, IllegalCommandException {
+        map.clear();
         StringTokenizer getCommandToken = new StringTokenizer(request, "?");
         String command = getCommandToken.nextToken();
         validateCommand(command);
 
-        HashMap<String, String> map = new HashMap<>();
         if (getCommandToken.hasMoreTokens()) {
             String parameterSet = getCommandToken.nextToken();
             StringTokenizer getParameterToken = new StringTokenizer(parameterSet, "&");
@@ -74,9 +75,7 @@ public class Menu {
                 parser(request);
 
                 if (scanner.equals("종료")) break;
-            } catch (IllegalCommandException e) {
-                System.err.println(e.getMessage());
-            } catch (IllegalParameterException e) {
+            } catch (IllegalParameterException | IllegalCommandException e) {
                 System.err.println(e.getMessage());
             } catch (NoSuchElementException e) {
                 System.err.println("입력되지 않은 값이 있습니다.");

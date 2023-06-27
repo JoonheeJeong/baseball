@@ -1,7 +1,5 @@
 package console.CommandMapper;
 
-import exception.IllegalCommandException;
-
 import java.util.HashMap;
 
 public interface CommandMapper {
