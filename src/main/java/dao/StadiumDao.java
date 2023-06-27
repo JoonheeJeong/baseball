@@ -1,7 +1,7 @@
 package dao;
 
 import mapper.StadiumMapper;
-import model.Stadium;
+import domain.Stadium;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 

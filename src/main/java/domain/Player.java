@@ -1,4 +1,4 @@
-package model;
+package domain;
 
 import lombok.*;
 
@@ -6,13 +6,14 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Builder
-public class OutPlayer {
+public class Player {
     private Long id;
-    private Long playerId;
-    private Reason reason;
+    private Long teamId;
+    private String name;
+    private String position;
     private LocalDateTime createdAt;
 }
