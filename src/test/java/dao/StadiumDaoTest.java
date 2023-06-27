@@ -22,11 +22,8 @@ public class StadiumDaoTest {
 
     @BeforeAll
     static void init() throws IOException {
-        String resource = "mapper/mybatis-config.xml";
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         stadiumDao = StadiumDao.getInstance();
-        stadiumDao.setSqlSessionFactory(sqlSessionFactory);
+        stadiumDao.setSqlSessionFactory(SqlSessionFactoryUtil.get());
     }
 
     @AfterEach
