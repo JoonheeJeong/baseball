@@ -1,6 +1,7 @@
 package dao;
 
 import domain.Team;
+import dto.TeamResponseDTO;
 import mapper.TeamMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -29,7 +30,7 @@ public class TeamDao extends AbstractMybatisDao {
         mapper.insert(team);
     }
 
-    public List<Team> selectAll() {
+    public List<TeamResponseDTO> selectAll() {
         TeamMapper mapper = session.getMapper(TeamMapper.class);
         return mapper.selectAll();
     }
