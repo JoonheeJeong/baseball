@@ -52,6 +52,17 @@ public class StadiumDaoTest {
 
     @Test
     void selectAll() {
-        log.info(stadiumDao.selectAll());
+        List<Stadium> stadiumList = stadiumDao.selectAll();
+        log.info(stadiumList);
+
+        assertTrue(stadiumList.stream()
+                .map(Stadium::getName)
+                .anyMatch(name -> name.equals("대전 한화생명 이글스파크")));
+        assertTrue(stadiumList.stream()
+                .map(Stadium::getName)
+                .anyMatch(name -> name.equals("잠실종합운동장")));
+        assertTrue(stadiumList.stream()
+                .map(Stadium::getName)
+                .anyMatch(name -> name.equals("사직 야구장")));
     }
 }
