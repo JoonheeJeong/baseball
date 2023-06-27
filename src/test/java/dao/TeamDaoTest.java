@@ -22,11 +22,8 @@ public class TeamDaoTest {
 
     @BeforeAll
     static void initAll() throws IOException {
-        String resource = "mapper/mybatis-config.xml";
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         teamDao = TeamDao.getInstance();
-        teamDao.setSqlSessionFactory(sqlSessionFactory);
+        teamDao.setSqlSessionFactory(SqlSessionFactoryUtil.get());
     }
 
     @Test
