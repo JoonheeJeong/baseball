@@ -9,4 +9,8 @@
         insert into team (stadium_id, name) values (#{stadiumId}, #{name})
     </insert>
 
+    <select id="selectAll" resultType="domain.Team">
+        select * from team
+    </select>
+
 </mapper>

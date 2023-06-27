@@ -5,6 +5,8 @@ import mapper.TeamMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import java.util.List;
+
 public class TeamDao {
 
     private static final TeamDao INSTANCE = new TeamDao();
@@ -29,6 +31,11 @@ public class TeamDao {
 
         TeamMapper mapper = session.getMapper(TeamMapper.class);
         mapper.insert(team);
+    }
+
+    public List<Team> selectAll() {
+        TeamMapper mapper = session.getMapper(TeamMapper.class);
+        return mapper.selectAll();
     }
 
     public void rollback() {
