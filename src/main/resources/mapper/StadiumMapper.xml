@@ -5,6 +5,10 @@
 
 <mapper namespace="mapper.StadiumMapper">
 
+    <insert id="insert">
+        insert into stadium (name) values (#{name})
+    </insert>
+
     <select id="selectAll" resultType="model.Stadium">
         select * from stadium
     </select>

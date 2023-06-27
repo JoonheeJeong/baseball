@@ -17,15 +17,33 @@ public class StadiumDao {
     public static StadiumDao getInstance() { return INSTANCE; }
 
     private SqlSessionFactory sqlSessionFactory;
+    private SqlSession session;
 
     public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
         this.sqlSessionFactory = sqlSessionFactory;
+        session = sqlSessionFactory.openSession();
+    }
+
+    public void insert(Stadium stadium, boolean newSession) {
+        if (newSession) {
+            manageNewSession();
+        }
+
+        StadiumMapper mapper = session.getMapper(StadiumMapper.class);
+        mapper.insert(stadium);
     }
 
     public List<Stadium> selectAll() {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            StadiumMapper mapper = session.getMapper(StadiumMapper.class);
-            return mapper.selectAll();
-        }
+        StadiumMapper mapper = session.getMapper(StadiumMapper.class);
+        return mapper.selectAll();
+    }
+
+    public void rollback() {
+        session.rollback();
+    }
+
+    private void manageNewSession() {
+        session.close();
+        session = sqlSessionFactory.openSession();
     }
 }
