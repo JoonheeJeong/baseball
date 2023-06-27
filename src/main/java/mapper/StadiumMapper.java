@@ -1,6 +1,6 @@
 package mapper;
 
-import model.Stadium;
+import domain.Stadium;
 
 import java.util.List;
 

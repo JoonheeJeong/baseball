@@ -9,7 +9,7 @@
         insert into stadium (name) values (#{name})
     </insert>
 
-    <select id="selectAll" resultType="model.Stadium">
+    <select id="selectAll" resultType="domain.Stadium">
         select * from stadium
     </select>
 
