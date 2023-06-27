@@ -14,6 +14,6 @@ public class Player {
     private Long id;
     private Long teamId;
     private String name;
-    private String position;
+    private Position position;
     private LocalDateTime createdAt;
 }
