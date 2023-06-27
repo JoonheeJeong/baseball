@@ -7,7 +7,7 @@
 
     <insert id="insert">
         <bind name="positionDescription" value="_parameter.getPosition().getDescription()"/>
-        insert into player (team_id, name, position) values (#{playerId}, #{name}, #{positionDescription})
+        insert into player (team_id, name, position) values (#{teamId}, #{name}, #{positionDescription})
     </insert>
 
 </mapper>
