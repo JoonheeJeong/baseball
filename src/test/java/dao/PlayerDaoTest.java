@@ -59,5 +59,6 @@ public class PlayerDaoTest {
         List<Player> playerList = playerDao.selectListByTeamId(teamIdToSearch);
 
         assertEquals(9, playerList.size());
+        assertEquals(teamIdToSearch, playerList.get(0).getTeamId());
     }
 }
