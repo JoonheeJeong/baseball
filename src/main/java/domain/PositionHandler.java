@@ -18,21 +18,18 @@ public class PositionHandler extends BaseTypeHandler<Position> {
     @Override
     public Position getNullableResult(ResultSet rs, String columnName) throws SQLException {
         String description = rs.getString(columnName);
-        return Position.getByDescription(description)
-                .orElseThrow(() -> new IllegalPositionDescriptionException("잘못된 포지션: " + description));
+        return Position.getByDescription(description);
     }
 
     @Override
     public Position getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         String description = rs.getString(columnIndex);
-        return Position.getByDescription(description)
-                .orElseThrow(() -> new IllegalPositionDescriptionException("잘못된 포지션: " + description));
+        return Position.getByDescription(description);
     }
 
     @Override
     public Position getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         String description = cs.getString(columnIndex);
-        return Position.getByDescription(description)
-                .orElseThrow(() -> new IllegalPositionDescriptionException("잘못된 포지션: " + description));
+        return Position.getByDescription(description);
     }
 }

@@ -1,5 +1,6 @@
 package domain;
 
+import exception.IllegalPositionDescriptionException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -23,9 +24,10 @@ public enum Position {
 
     private final String description;
 
-    public static Optional<Position> getByDescription(String description) {
+    public static Position getByDescription(String description) throws IllegalPositionDescriptionException {
         return Arrays.stream(values())
                 .filter(position -> position.getDescription().equals(description))
-                .findAny();
+                .findAny()
+                .orElseThrow(() -> new IllegalPositionDescriptionException("존재하지 않는 포지션: " + description));
     }
 }
