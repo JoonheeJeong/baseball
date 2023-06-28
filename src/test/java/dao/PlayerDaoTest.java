@@ -1,15 +1,17 @@
 package dao;
 
 import domain.Player;
-import domain.Team;
+import domain.Position;
 import lombok.extern.log4j.Log4j2;
-import org.junit.jupiter.api.Assertions;
+import org.apache.ibatis.exceptions.PersistenceException;
+import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Log4j2
 public class PlayerDaoTest {
@@ -23,16 +25,17 @@ public class PlayerDaoTest {
     }
 
     @Test
-    void insert() {
+    void insertDuplicatePosition() {
         final String playerName = "정준희";
         Player player = Player.builder()
                 .teamId(1L)
                 .name(playerName)
-                .position("유격수")
+                .position(Position.SS)
                 .build();
 
-        Assertions.assertThrows(
-                Exception.class,
+        Exception e = assertThrows(
+                PersistenceException.class,
                 () -> playerDao.insert(player, true));
+        assertEquals(JdbcSQLIntegrityConstraintViolationException.class, e.getCause().getClass());
     }
 }
