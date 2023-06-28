@@ -5,7 +5,6 @@ import exception.IllegalParameterException;
 import lombok.extern.log4j.Log4j2;
 import util.annotation.Controller;
 import util.annotation.RequestMapping;
-import util.annotation.Service;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
@@ -50,10 +49,10 @@ public class ConsoleScanner {
                     log.warn(e.getMessage());
                 } catch (NoSuchElementException e) {
                     log.warn("입력되지 않은 값이 있습니다.");
+                } catch (InvocationTargetException e) {
+                    log.warn("알맞은 파라미터 형식이 아닙니다.");
                 }
             }
-        } catch (InvocationTargetException e) {
-            log.warn("알맞은 파라미터 형식이 아닙니다.");
         } catch (Exception e) {
             log.warn(e.getMessage());
         }
@@ -108,19 +107,5 @@ public class ConsoleScanner {
         if (isFind == false) {
             log.warn("알맞은 요청명이 아닙니다.");
         }
-    }
-
-    private static Object dependencyInjection(Set<Class> classes, Class cls) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        String controller = cls.getName().replaceAll("controller.", "").replaceAll("Controller", "");
-        for (Class<?> clazz : classes) {
-            if (clazz.isAnnotationPresent(Service.class)) {
-                String service = clazz.getName().replaceAll("service", "").replaceAll("Service", "");
-                if (controller.equals(service)) {
-                    Object instance = clazz.getDeclaredConstructor().newInstance();
-                    return instance;
-                }
-            }
-        }
-        return null;
     }
 }
