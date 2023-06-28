@@ -3,6 +3,7 @@ package console;
 import console.CommandMapper.*;
 import exception.IllegalCommandException;
 import exception.IllegalParameterException;
+import service.PlayerService;
 import service.StadiumService;
 import service.TeamService;
 
@@ -24,11 +25,11 @@ public class Menu {
         this.commandMapperMap = new HashMap<>();
         commandMapperMap.put(RegisterStadiumCommandMapper.name, new RegisterStadiumCommandMapper(baseBallService = new StadiumService()));
         commandMapperMap.put(RegisterTeamCommandMapper.name, new RegisterTeamCommandMapper(baseBallService = new TeamService()));
-        commandMapperMap.put(RegisterPlayerCommandMapper.name, new RegisterPlayerCommandMapper(baseBallService));
+        commandMapperMap.put(RegisterPlayerCommandMapper.name, new RegisterPlayerCommandMapper(baseBallService = new PlayerService()));
         commandMapperMap.put(RegisterOutPlayerCommandMapper.name, new RegisterOutPlayerCommandMapper(baseBallService));
         commandMapperMap.put(ShowStadiumCommandMapper.name, new ShowStadiumCommandMapper(baseBallService = new StadiumService()));
         commandMapperMap.put(ShowTeamCommandMapper.name, new ShowTeamCommandMapper(baseBallService = new TeamService()));
-        commandMapperMap.put(ShowPlayerCommandMapper.name, new ShowPlayerCommandMapper(baseBallService));
+        commandMapperMap.put(ShowPlayerCommandMapper.name, new ShowPlayerCommandMapper(baseBallService = new PlayerService()));
         commandMapperMap.put(ShowOutPlayerCommandMapper.name, new ShowOutPlayerCommandMapper(baseBallService));
         commandMapperMap.put(ShowPositionPlayerCommandMapper.name, new ShowPositionPlayerCommandMapper(baseBallService));
     }

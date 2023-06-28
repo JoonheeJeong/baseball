@@ -16,9 +16,7 @@ public class RegisterPlayerCommandMapper implements CommandMapper {
     @Override
     public void mapCommand(String command, HashMap<String, String> map) throws IllegalParameterException {
         if (map.containsKey("name") && map.containsKey("teamId") && map.containsKey("position")) {
-         /*
-            TODO : baseBallService.registerTeam(map);
-        */
+         baseBallService.register(map);
         } else {
             throw new IllegalParameterException("알맞은 파라미터 형식이 아닙니다.");
         }

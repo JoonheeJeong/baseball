@@ -4,6 +4,7 @@ import exception.IllegalParameterException;
 import service.BaseBallService;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 public class ShowStadiumCommandMapper implements CommandMapper {
     public static final String name = "야구장목록";
@@ -15,6 +16,6 @@ public class ShowStadiumCommandMapper implements CommandMapper {
 
     @Override
     public void mapCommand(String command, HashMap<String, String> map) throws IllegalParameterException {
-        baseBallService.show();
+        baseBallService.show(map);
     }
 }

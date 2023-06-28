@@ -4,6 +4,7 @@ import exception.IllegalParameterException;
 import service.BaseBallService;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 public class ShowPlayerCommandMapper implements CommandMapper {
     public static final String name = "선수목록";
@@ -16,9 +17,7 @@ public class ShowPlayerCommandMapper implements CommandMapper {
     @Override
     public void mapCommand(String command, HashMap<String, String> map) throws IllegalParameterException {
         if (map.containsKey("teamId")) {
-            /*
-            TODO : baseBallService.showPlayerList(map);
-            */
+            baseBallService.show(map);
         } else {
             throw new IllegalParameterException("알맞은 파라미터 형식이 아닙니다.");
         }
