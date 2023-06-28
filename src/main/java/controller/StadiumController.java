@@ -14,7 +14,7 @@ public class StadiumController implements BaseballController {
 
     @Override
     @RequestMapping(uri = "야구장등록")
-    public void insert(String queryString) throws IllegalParameterException {
+    public void insert(String queryString) {
         HashMap<String, String> map = parameterParser(queryString);
         validateParameter(map);
         stadiumService.register(map);
@@ -23,7 +23,8 @@ public class StadiumController implements BaseballController {
     @Override
     @RequestMapping(uri = "야구장목록")
     public void select(String queryString) {
-        stadiumService.show();
+        HashMap<String, String> map = parameterParser(queryString);
+        stadiumService.show(map);
     }
 
     @Override

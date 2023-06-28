@@ -24,7 +24,8 @@ public class TeamController implements BaseballController{
     @Override
     @RequestMapping(uri = "팀목록")
     public void select(String queryString) {
-        teamService.show();
+        HashMap<String, String> map = parameterParser(queryString);
+        teamService.show(map);
     }
 
     @Override

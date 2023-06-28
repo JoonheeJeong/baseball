@@ -9,7 +9,7 @@ public class OutPlayerService implements BaseBallService{
     }
 
     @Override
-    public void show() {
+    public void show(HashMap<String, String> map) {
 
     }
 }
