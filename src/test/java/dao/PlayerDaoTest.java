@@ -61,4 +61,13 @@ public class PlayerDaoTest {
         assertEquals(9, playerList.size());
         assertEquals(teamIdToSearch, playerList.get(0).getTeamId());
     }
+
+    @Test
+    void selectListByTeamId_NotFound() {
+        final Long teamIdToSearch = 100L;
+
+        List<Player> playerList = playerDao.selectListByTeamId(teamIdToSearch);
+
+        assertEquals(0, playerList.size());
+    }
 }
