@@ -9,12 +9,10 @@ import service.TeamService;
 
 import java.util.*;
 
-/**
- * 컨트롤러 역할을 대신하므로,
- * service를 주입받아서
- * 메소드 사용
- */
+
+
 public class Menu {
+    /**
     private static Menu instance;
     private service.BaseBallService baseBallService;
     private final Map<String, CommandMapper> commandMapperMap;
@@ -85,4 +83,5 @@ public class Menu {
             }
         }
     }
+ */
 }
