@@ -2,6 +2,7 @@ package dao;
 
 import domain.Player;
 import domain.Position;
+import domain.PositionTeamPlayer;
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
@@ -69,5 +70,12 @@ public class PlayerDaoTest {
         List<Player> playerList = playerDao.selectListByTeamId(teamIdToSearch);
 
         assertEquals(0, playerList.size());
+    }
+
+    @Test
+    void selectListForEachTeamByPosition() {
+        List<PositionTeamPlayer> positionTeamPlayerList = playerDao.selectListForEachTeamByPosition();
+        positionTeamPlayerList.forEach(log::info);
+        assertEquals(9, positionTeamPlayerList.size());
     }
 }

@@ -1,6 +1,7 @@
 package dao;
 
 import domain.Player;
+import domain.PositionTeamPlayer;
 import mapper.PlayerMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -27,5 +28,10 @@ public class PlayerDao extends AbstractMybatisDao {
     public List<Player> selectListByTeamId(Long teamId) {
         PlayerMapper mapper = session.getMapper(PlayerMapper.class);
         return mapper.selectListByTeamId(teamId);
+    }
+
+    public List<PositionTeamPlayer> selectListForEachTeamByPosition() {
+        PlayerMapper mapper = session.getMapper(PlayerMapper.class);
+        return mapper.selectListForEachTeamByPosition();
     }
 }

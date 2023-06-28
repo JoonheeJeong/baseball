@@ -21,4 +21,24 @@
         select * from player where team_id = #{teamId}
     </select>
 
+    <resultMap id="positionTeamPlayer" type="domain.PositionTeamPlayer">
+        <id column="position" property="position" typeHandler="domain.PositionHandler" />
+        <result column="한화 이글스" property="한화_이글스" />
+        <result column="두산 베어스" property="두산_베어스" />
+        <result column="롯데 자이언츠" property="롯데_자이언츠" />
+    </resultMap>
+    <select id="selectListForEachTeamByPosition" resultMap="positionTeamPlayer">
+        with combined_teams as (
+            select player.position, player.name, team.name as team_name
+            from player
+                join team on player.team_id = team.id
+        )
+        select
+            position,
+            max(case when team_name = '한화 이글스' then name end) as "한화 이글스",
+            max(case when team_name = '두산 베어스' then name end) as "두산 베어스",
+            max(case when team_name = '롯데 자이언츠' then name end) as "롯데 자이언츠"
+        from combined_teams
+        group by position;
+    </select>
 </mapper>
