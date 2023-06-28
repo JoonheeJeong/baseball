@@ -10,4 +10,8 @@
         insert into player (team_id, name, position) values (#{teamId}, #{name}, #{positionDescription})
     </insert>
 
+    <select id="selectListByTeamId" resultType="domain.Player">
+        select * from player where team_id = #{teamId}
+    </select>
+
 </mapper>
