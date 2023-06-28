@@ -1,7 +1,7 @@
 package console.CommandMapper;
 
-import console.BaseBallService;
 import exception.IllegalParameterException;
+import service.BaseBallService;
 
 import java.util.HashMap;
 
