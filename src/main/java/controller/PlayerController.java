@@ -9,8 +9,13 @@ import util.annotation.RequestMapping;
 import java.util.HashMap;
 
 @Controller
-public class PlayerController implements BaseballController{
-    private BaseBallService playerService = new PlayerService();
+public class PlayerController implements BaseballController {
+    private BaseBallService playerService;
+
+    public PlayerController() {
+        this.playerService = PlayerService.getInstance();
+    }
+
     @Override
     @RequestMapping(uri = "선수등록")
     public void insert(String queryString) {

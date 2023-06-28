@@ -9,9 +9,13 @@ import util.annotation.RequestMapping;
 import java.util.HashMap;
 
 @Controller
-public class TeamController implements BaseballController{
+public class TeamController implements BaseballController {
 
-    private BaseBallService teamService = new TeamService();
+    private BaseBallService teamService;
+
+    public TeamController() {
+        this.teamService = TeamService.getInstance();
+    }
 
     @Override
     @RequestMapping(uri = "팀등록")
@@ -24,7 +28,7 @@ public class TeamController implements BaseballController{
     @Override
     @RequestMapping(uri = "팀목록")
     public void select(String queryString) {
-        HashMap<String, String> map = parameterParser(queryString);
+        HashMap<String, String> map = null;
         teamService.show(map);
     }
 

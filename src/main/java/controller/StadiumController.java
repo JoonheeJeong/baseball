@@ -10,7 +10,11 @@ import java.util.HashMap;
 
 @Controller
 public class StadiumController implements BaseballController {
-    private BaseBallService stadiumService = new StadiumService();
+    private BaseBallService stadiumService;
+
+    public StadiumController() {
+        this.stadiumService = StadiumService.getInstance();
+    }
 
     @Override
     @RequestMapping(uri = "야구장등록")
@@ -23,7 +27,7 @@ public class StadiumController implements BaseballController {
     @Override
     @RequestMapping(uri = "야구장목록")
     public void select(String queryString) {
-        HashMap<String, String> map = parameterParser(queryString);
+        HashMap<String, String> map = null;
         stadiumService.show(map);
     }
 
