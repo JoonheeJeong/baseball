@@ -24,7 +24,7 @@ class StadiumServiceTest {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         stadiumDao = StadiumDao.getInstance();
         stadiumDao.setSqlSessionFactory(sqlSessionFactory);
-        stadiumService = new StadiumService();
+        //stadiumService = new StadiumService();
     }
 
 

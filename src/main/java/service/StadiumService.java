@@ -13,7 +13,19 @@ import java.util.List;
 @Service
 public class StadiumService implements BaseBallService {
 
-    private final StadiumDao stadiumDao = StadiumDao.getInstance();
+    private static StadiumService INSTANCE;
+    private final StadiumDao stadiumDao;
+
+    private StadiumService() {
+        stadiumDao = StadiumDao.getInstance();
+    }
+
+    public static StadiumService getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new StadiumService();
+        }
+        return INSTANCE;
+    }
 
     public void register(HashMap<String, String> map) {
         try {

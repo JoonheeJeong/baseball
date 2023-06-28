@@ -12,7 +12,19 @@ import java.util.List;
 @Log4j2
 public class TeamService implements BaseBallService {
 
-    private final TeamDao teamDao = TeamDao.getInstance();
+    private static TeamService INSTANCE;
+    private final TeamDao teamDao;
+
+    private TeamService() {
+        teamDao = TeamDao.getInstance();
+    }
+
+    public static TeamService getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new TeamService();
+        }
+        return INSTANCE;
+    }
 
     @Override
     public void register(HashMap<String, String> map) {

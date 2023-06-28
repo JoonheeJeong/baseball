@@ -13,7 +13,19 @@ import java.util.List;
 @Log4j2
 public class PlayerService implements BaseBallService {
 
-    private final PlayerDao playerDao = PlayerDao.getInstance();
+    private static PlayerService INSTANCE;
+    private final PlayerDao playerDao;
+
+    private PlayerService() {
+        playerDao = PlayerDao.getInstance();
+    }
+
+    public static PlayerService getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new PlayerService();
+        }
+        return INSTANCE;
+    }
 
     @Override
     public void register(HashMap<String, String> map) {
