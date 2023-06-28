@@ -27,7 +27,7 @@ public class StadiumService implements BaseBallService {
         }
     }
 
-    public void show() {
+    public void show(HashMap<String, String> map) {
         try {
             stadiumDao.setSqlSessionFactory(get());
             List<Stadium> stadiumList = stadiumDao.selectAll();
