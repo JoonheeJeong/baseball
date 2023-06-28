@@ -9,8 +9,10 @@
         insert into team (stadium_id, name) values (#{stadiumId}, #{name})
     </insert>
 
-    <select id="selectAll" resultType="domain.Team">
-        select * from team
+    <select id="selectAll" resultType="dto.TeamResponseDTO">
+        select t.name as teamName,t.created_at as teamCreatedAt, s.name as stadiumName, s.created_at as stadiumCreatedAt
+        from team as t left outer join stadium as s
+        where t.stadium_id = s.id;
     </select>
 
 </mapper>

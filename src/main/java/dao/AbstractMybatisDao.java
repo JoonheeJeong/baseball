@@ -17,6 +17,10 @@ public abstract class AbstractMybatisDao {
         session.rollback();
     }
 
+    public void commit() {
+        session.commit();
+    }
+
     protected void manageNewSession() {
         session.close();
         session = sqlSessionFactory.openSession();

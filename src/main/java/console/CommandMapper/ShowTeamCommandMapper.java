@@ -15,8 +15,6 @@ public class ShowTeamCommandMapper implements CommandMapper {
 
     @Override
     public void mapCommand(String command, HashMap<String, String> map) throws IllegalParameterException {
-        /*
-            TODO : baseBallService.showTeamList();
-        */
+        baseBallService.show();
     }
 }
