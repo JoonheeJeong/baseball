@@ -22,7 +22,7 @@ public class TeamService implements BaseBallService{
                     .name(map.get("name"))
                     .build();
             teamDao.insert(team, true);
-            //teamDao.commit();
+            teamDao.commit();
             log.info("성공");
         } catch (IOException e) {
             throw new RuntimeException(e);
