@@ -9,8 +9,15 @@
         <bind name="positionDescription" value="_parameter.getPosition().getDescription()"/>
         insert into player (team_id, name, position) values (#{teamId}, #{name}, #{positionDescription})
     </insert>
-
-    <select id="selectListByTeamId" resultType="domain.Player">
+    
+    <resultMap id="player1" type="domain.Player">
+        <id column="id" property="id" />
+        <result column="team_id" property="teamId" />
+        <result column="name" property="name" />
+        <result column="position" property="position" typeHandler="domain.PositionHandler" />
+        <result column="create_at" property="createdAt" />
+    </resultMap>
+    <select id="selectListByTeamId" resultMap="player1">
         select * from player where team_id = #{teamId}
     </select>
 
