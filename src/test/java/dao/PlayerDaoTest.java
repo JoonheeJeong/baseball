@@ -16,26 +16,38 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @Log4j2
 public class PlayerDaoTest {
 
+    static final String playerName = "정준희";
+
+    static Player playerToInsert;
     static PlayerDao playerDao;
 
     @BeforeAll
     static void initAll() throws IOException {
         playerDao = PlayerDao.getInstance();
         playerDao.setSqlSessionFactory(SqlSessionFactoryUtil.get());
+
+        playerToInsert = Player.builder()
+                .name(playerName)
+                .position(Position.SS)
+                .build();
     }
 
     @Test
     void insertDuplicatePosition() {
-        final String playerName = "정준희";
-        Player player = Player.builder()
-                .teamId(1L)
-                .name(playerName)
-                .position(Position.SS)
-                .build();
+        playerToInsert.setTeamId(1L);
 
         Exception e = assertThrows(
                 PersistenceException.class,
-                () -> playerDao.insert(player, true));
+                () -> playerDao.insert(playerToInsert, true));
         assertEquals(JdbcSQLIntegrityConstraintViolationException.class, e.getCause().getClass());
+    }
+
+    @Test
+    void insert() {
+        playerToInsert.setTeamId(4L);
+
+        playerDao.insert(playerToInsert, true);
+
+        playerDao.rollback();
     }
 }

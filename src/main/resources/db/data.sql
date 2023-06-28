@@ -9,6 +9,7 @@ insert into stadium (name) values ('사직 야구장');
 insert into TEAM (STADIUM_ID, NAME) values ( 1, '한화 이글스' );
 insert into TEAM (STADIUM_ID, NAME) values ( 2, '두산 베어스' );
 insert into TEAM (STADIUM_ID, NAME) values ( 3, '롯데 자이언츠' );
+insert into TEAM (STADIUM_ID, NAME) values ( 1, '패스트캠퍼스 백엔드 부트캠프 5기' );
 
 insert into player (team_id, name, position) values (1, '이태양', '투수');
 insert into player (team_id, name, position) values (1, '최재훈', '포수');
