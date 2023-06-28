@@ -36,25 +36,30 @@ public class ConsoleScanner {
         try {
             Set<Class> classes = componentScan("controller");
             while (true) {
-                System.out.println("어떤 기능을 요청하시겠습니까?");
-                String request = scanner.nextLine();
-                HashMap<String, String> map = new HashMap<>();
-                map = CommandParser(request);
+                try {
+                    log.info("어떤 기능을 요청하시겠습니까?");
+                    String request = scanner.nextLine();
+                    HashMap<String, String> map = new HashMap<>();
+                    map = requestParser(request);
 
-                findUri(classes, map.get("command"), map.get("queryString"));
+                    findUri(classes, map.get("command"), map.get("queryString"));
 
-                if (scanner.equals("종료")) break;
+                    if (scanner.equals("종료")) break;
+
+                } catch (IllegalParameterException | IllegalCommandException e) {
+                    log.warn(e.getMessage());
+                } catch (NoSuchElementException e) {
+                    log.warn("입력되지 않은 값이 있습니다.");
+                }
             }
-        } catch (IllegalParameterException | IllegalCommandException e) {
-            System.err.println(e.getMessage());
-        } catch (NoSuchElementException e) {
-            System.err.println("입력되지 않은 값이 있습니다.");
+        } catch (InvocationTargetException e) {
+            log.warn("알맞은 파라미터 형식이 아닙니다.");
         } catch (Exception e) {
-            System.err.println("컴포넌트 스캔 오류");
+            log.warn(e.getMessage());
         }
     }
 
-    private HashMap<String, String> CommandParser(String request) {
+    private HashMap<String, String> requestParser(String request) {
         HashMap<String, String> map = new HashMap<>();
 
         StringTokenizer commandToken = new StringTokenizer(request, "?");
@@ -101,7 +106,7 @@ public class ConsoleScanner {
             }
         }
         if (isFind == false) {
-            log.info("Invalid Approach");
+            log.warn("알맞은 요청명이 아닙니다.");
         }
     }
 
