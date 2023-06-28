@@ -4,6 +4,8 @@ import domain.Player;
 import mapper.PlayerMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import java.util.List;
+
 public class PlayerDao extends AbstractMybatisDao {
 
     private static final PlayerDao INSTANCE = new PlayerDao();
@@ -13,11 +15,6 @@ public class PlayerDao extends AbstractMybatisDao {
 
     public static PlayerDao getInstance() { return INSTANCE; }
 
-    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
-        this.sqlSessionFactory = sqlSessionFactory;
-        session = sqlSessionFactory.openSession();
-    }
-
     public void insert(Player player, boolean newSession) {
         if (newSession) {
             manageNewSession();
@@ -25,5 +22,10 @@ public class PlayerDao extends AbstractMybatisDao {
 
         PlayerMapper mapper = session.getMapper(PlayerMapper.class);
         mapper.insert(player);
+    }
+
+    public List<Player> selectListByTeamId(Long teamId) {
+        PlayerMapper mapper = session.getMapper(PlayerMapper.class);
+        return mapper.selectListByTeamId(teamId);
     }
 }
