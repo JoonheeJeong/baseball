@@ -3,12 +3,14 @@ package service;
 import dao.StadiumDao;
 import domain.Stadium;
 import lombok.extern.log4j.Log4j2;
+import util.annotation.Service;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
 @Log4j2
+@Service
 public class StadiumService implements BaseBallService {
 
     private final StadiumDao stadiumDao = StadiumDao.getInstance();
