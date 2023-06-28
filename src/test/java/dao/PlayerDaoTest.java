@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -49,5 +50,14 @@ public class PlayerDaoTest {
         playerDao.insert(playerToInsert, true);
 
         playerDao.rollback();
+    }
+
+    @Test
+    void selectListByTeamId() {
+        final Long teamIdToSearch = 1L;
+
+        List<Player> playerList = playerDao.selectListByTeamId(teamIdToSearch);
+
+        assertEquals(9, playerList.size());
     }
 }
