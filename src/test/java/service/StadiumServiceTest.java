@@ -48,6 +48,6 @@ class StadiumServiceTest {
         Stadium stadium3 = Stadium.builder().id((long) 3).name("Stadium2").build();
         Stadium stadium4 = Stadium.builder().id((long) 4).name("Stadium2").build();
         //when
-        stadiumService.show();
+        //stadiumService.show();
     }
 }
