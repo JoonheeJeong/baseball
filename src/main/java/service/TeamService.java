@@ -10,9 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 
 @Log4j2
-public class TeamService implements BaseBallService{
+public class TeamService implements BaseBallService {
 
     private final TeamDao teamDao = TeamDao.getInstance();
+
     @Override
     public void register(HashMap<String, String> map) {
         try {
@@ -30,7 +31,7 @@ public class TeamService implements BaseBallService{
     }
 
     @Override
-    public void show() {
+    public void show(HashMap<String, String> map) {
         try {
             teamDao.setSqlSessionFactory(get());
             List<TeamResponseDTO> teamList = teamDao.selectAll();
