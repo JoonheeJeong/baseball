@@ -75,7 +75,7 @@ public class PlayerDaoTest {
     @Test
     void selectListForEachTeamByPosition() {
         List<PositionTeamPlayer> positionTeamPlayerList = playerDao.selectListForEachTeamByPosition();
-
+        positionTeamPlayerList.forEach(log::info);
         assertEquals(9, positionTeamPlayerList.size());
     }
 }

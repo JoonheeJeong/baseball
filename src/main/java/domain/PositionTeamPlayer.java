@@ -1,33 +1,33 @@
 package domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.stream.IntStream;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class PositionTeamPlayer {
+
+    private static final int NUM_TEAMS = 3;
+
     private Position position;
-    private TeamName 한화_이글스;
-    private TeamName 두산_베어스;
-    private TeamName 롯데_자이언츠;
+    private String 한화_이글스;
+    private String 두산_베어스;
+    private String 롯데_자이언츠;
 
     @Override
     public String toString() {
-        StringBuilder formatStringBuilder = new StringBuilder("%4s");
-        Field[] fields = PositionTeamPlayer.class.getDeclaredFields();
-        int numOfTeams = fields.length - 1;
-        formatStringBuilder.append(" %10s".repeat(numOfTeams));
-        String[] args = new String[numOfTeams + 1];
+        String[] args = new String[NUM_TEAMS + 1];
         args[0] = position.getDescription();
-        IntStream.range(1, numOfTeams + 1)
-                .forEach(i -> args[i] = TeamName.valueOf(fields[i].getName()).getDescription());
-        return String.format(formatStringBuilder.toString(), (Object []) args);
+        args[1] = 한화_이글스;
+        args[2] = 두산_베어스;
+        args[3] = 롯데_자이언츠;
+        return String.format("%4s" + "%10s".repeat(NUM_TEAMS), (Object []) args);
     }
 }
