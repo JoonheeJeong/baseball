@@ -18,7 +18,7 @@ public class StadiumService implements BaseBallService {
             stadiumDao.setSqlSessionFactory(get());
             Stadium stadium = Stadium.builder().name(map.get("name")).build();
             stadiumDao.insert(stadium, true);
-            stadiumDao.commit();
+            //stadiumDao.commit();
             log.info("성공");
         } catch (IOException e) {
             throw new RuntimeException(e);
