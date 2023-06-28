@@ -5,10 +5,8 @@ import domain.Player;
 import domain.Position;
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.exceptions.PersistenceException;
-import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
