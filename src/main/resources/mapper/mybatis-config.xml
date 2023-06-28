@@ -27,5 +27,6 @@
     <mappers>
         <mapper resource="mapper/StadiumMapper.xml"/>
         <mapper resource="mapper/TeamMapper.xml"/>
+        <mapper resource="mapper/PlayerMapper.xml"/>
     </mappers>
 </configuration>
