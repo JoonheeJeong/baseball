@@ -5,6 +5,8 @@ import exception.IllegalParameterException;
 import lombok.extern.log4j.Log4j2;
 import util.annotation.Controller;
 import util.annotation.RequestMapping;
+import util.messages.ErrorMessage;
+import util.messages.ResponseMessage;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
@@ -23,9 +25,9 @@ public class ConsoleScanner {
     }
 
     public static ConsoleScanner getConsoleInstance() {
-        if (consoleInstance == null) {
+        if (consoleInstance == null)
             consoleInstance = new ConsoleScanner();
-        }
+
         return consoleInstance;
     }
 
@@ -36,21 +38,19 @@ public class ConsoleScanner {
             Set<Class> classes = componentScan("controller");
             while (true) {
                 try {
-                    log.info("어떤 기능을 요청하시겠습니까?");
+                    log.info(ResponseMessage.SERVICE_ASK);
                     String request = scanner.nextLine();
+                    if (request.equals(ResponseMessage.SERVICE_OFF)) break;
+
                     HashMap<String, String> map = new HashMap<>();
                     map = requestParser(request);
-
                     findUri(classes, map.get("command"), map.get("queryString"));
-
-                    if (request.equals("종료")) break;
-
                 } catch (IllegalParameterException | IllegalCommandException e) {
                     log.warn(e.getMessage());
                 } catch (NoSuchElementException e) {
-                    log.warn("입력되지 않은 값이 있습니다.");
+                    log.warn(ErrorMessage.ERR_MSG_NO_SUCH);
                 } catch (InvocationTargetException e) {
-                    log.warn(e.getTargetException());
+                    log.warn(ErrorMessage.ERR_MSG_ILLEGAL_PARAMETER_TYPE);
                 }
             }
         } catch (Exception e) {
@@ -63,9 +63,9 @@ public class ConsoleScanner {
 
         StringTokenizer commandToken = new StringTokenizer(request, "?");
         map.put("command", commandToken.nextToken());
-        if (commandToken.hasMoreTokens()) {
+        if (commandToken.hasMoreTokens())
             map.put("queryString", commandToken.nextToken());
-        }
+
         return map;
     }
 
@@ -104,8 +104,7 @@ public class ConsoleScanner {
                 }
             }
         }
-        if (isFind == false) {
-            log.warn("알맞은 요청명이 아닙니다.");
-        }
+        if (isFind == false)
+            log.warn(ErrorMessage.ERR_MSG_ILLEGAL_COMMAND);
     }
 }

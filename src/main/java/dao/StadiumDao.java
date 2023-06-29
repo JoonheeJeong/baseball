@@ -17,9 +17,8 @@ public class StadiumDao extends AbstractMybatisDao {
     }
 
     public void insert(Stadium stadium, boolean newSession) {
-        if (newSession) {
+        if (newSession)
             manageNewSession();
-        }
 
         StadiumMapper mapper = session.getMapper(StadiumMapper.class);
         mapper.insert(stadium);

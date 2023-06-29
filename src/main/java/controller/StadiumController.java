@@ -33,9 +33,9 @@ public class StadiumController implements BaseballController {
 
     @Override
     public boolean validateParameter(HashMap<String, String> map) {
-        if (map.containsKey("name")) {
+        if (map.containsKey("name"))
             return true;
-        }
+
         throw new IllegalParameterException("알맞은 파라미터명이 아닙니다.");
     }
 

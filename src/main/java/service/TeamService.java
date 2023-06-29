@@ -4,6 +4,9 @@ import dao.TeamDao;
 import domain.Team;
 import dto.TeamResponseDTO;
 import lombok.extern.log4j.Log4j2;
+import org.apache.ibatis.exceptions.PersistenceException;
+import util.messages.ErrorMessage;
+import util.messages.ResponseMessage;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,9 +23,9 @@ public class TeamService implements BaseBallService {
     }
 
     public static TeamService getInstance() {
-        if (INSTANCE == null) {
+        if (INSTANCE == null)
             INSTANCE = new TeamService();
-        }
+
         return INSTANCE;
     }
 
@@ -36,9 +39,11 @@ public class TeamService implements BaseBallService {
                     .build();
             teamDao.insert(team, true);
             teamDao.commit();
-            log.info("성공");
+            log.info(ResponseMessage.SERVICE_SUCCESS);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (PersistenceException e) {
+            log.warn(ErrorMessage.ERR_MSG_DUPLICATE_PARAMETER);
         }
     }
 
@@ -47,9 +52,9 @@ public class TeamService implements BaseBallService {
         try {
             teamDao.setSqlSessionFactory(get());
             List<TeamResponseDTO> teamList = teamDao.selectAll();
-            for (TeamResponseDTO teamResponseDTO : teamList) {
+            for (TeamResponseDTO teamResponseDTO : teamList)
                 log.info(teamResponseDTO);
-            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

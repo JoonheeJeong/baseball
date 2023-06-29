@@ -33,9 +33,9 @@ public class PlayerController implements BaseballController {
 
     @Override
     public boolean validateParameter(HashMap<String, String> map) {
-        if (map.containsKey("name") && map.containsKey("teamId") && map.containsKey("position")) {
+        if (map.containsKey("name") && map.containsKey("teamId") && map.containsKey("position"))
             return true;
-        }
+
         throw new IllegalParameterException("알맞은 파라미터명이 아닙니다.");
     }
 }

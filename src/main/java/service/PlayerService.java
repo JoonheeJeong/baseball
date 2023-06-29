@@ -5,6 +5,8 @@ import domain.Player;
 import domain.Position;
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.exceptions.PersistenceException;
+import util.messages.ErrorMessage;
+import util.messages.ResponseMessage;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -21,9 +23,9 @@ public class PlayerService implements BaseBallService {
     }
 
     public static PlayerService getInstance() {
-        if (INSTANCE == null) {
+        if (INSTANCE == null)
             INSTANCE = new PlayerService();
-        }
+
         return INSTANCE;
     }
 
@@ -38,9 +40,9 @@ public class PlayerService implements BaseBallService {
                     .build();
             playerDao.insert(player, true);
             playerDao.commit();
-            log.info("성공");
+            log.info(ResponseMessage.SERVICE_SUCCESS);
         } catch (PersistenceException e) {
-            log.warn("중복된 포지션입니다.");
+            log.warn(ErrorMessage.ERR_MSG_DUPLICATE_POSITION);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -51,9 +53,9 @@ public class PlayerService implements BaseBallService {
         try {
             playerDao.setSqlSessionFactory(get());
             List<Player> playerList = playerDao.selectListByTeamId(Long.valueOf(map.get("teamId")));
-            for (Player player : playerList) {
+            for (Player player : playerList)
                 log.info(player);
-            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

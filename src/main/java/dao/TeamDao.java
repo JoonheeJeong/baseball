@@ -24,9 +24,8 @@ public class TeamDao extends AbstractMybatisDao {
     }
 
     public void insert(Team team, boolean newSession) {
-        if (newSession) {
+        if (newSession)
             manageNewSession();
-        }
 
         TeamMapper mapper = session.getMapper(TeamMapper.class);
         mapper.insert(team);
