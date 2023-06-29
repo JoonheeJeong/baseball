@@ -43,7 +43,7 @@ public class ConsoleScanner {
                     String request = scanner.nextLine();
                     if (request.equals(ResponseMessage.SERVICE_OFF)) break;
 
-                    HashMap<String, String> map = new HashMap<>();
+                    HashMap<String, String> map;
                     map = requestParser(request);
                     findUri(classes, map.get("command"), map.get("queryString"));
                 } catch (IllegalParameterException | IllegalCommandException e) {
