@@ -9,14 +9,7 @@
         insert into player (team_id, name, position) values (#{teamId}, #{name}, #{position})
     </insert>
 
-    <resultMap id="player1" type="domain.Player">
-        <id column="id" property="id" />
-        <result column="team_id" property="teamId" />
-        <result column="name" property="name" />
-        <result column="position" property="position" typeHandler="domain.PositionHandler" />
-        <result column="created_at" property="createdAt" />
-    </resultMap>
-    <select id="selectListByTeamId" resultMap="player1">
+    <select id="selectListByTeamId" resultType="domain.Player">
         select * from player where team_id = #{teamId}
     </select>
 
