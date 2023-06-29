@@ -3,13 +3,12 @@ package service;
 import dao.PlayerDao;
 import domain.Player;
 import domain.Position;
-import util.messages.ErrorMessage;
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.exceptions.PersistenceException;
+import util.messages.ErrorMessage;
 import util.messages.ResponseMessage;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 

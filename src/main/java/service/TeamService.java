@@ -3,6 +3,7 @@ package service;
 import dao.TeamDao;
 import domain.Team;
 import dto.TeamResponseDTO;
+import org.apache.ibatis.exceptions.PersistenceException;
 import util.messages.ErrorMessage;
 import lombok.extern.log4j.Log4j2;
 import util.messages.ResponseMessage;
@@ -41,6 +42,8 @@ public class TeamService implements BaseBallService {
             log.info(ResponseMessage.SERVICE_SUCCESS);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (PersistenceException e) {
+            log.warn(ErrorMessage.ERR_MSG_DUPLICATE_PARAMETER);
         }
     }
 

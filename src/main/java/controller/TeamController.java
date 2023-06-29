@@ -39,7 +39,7 @@ public class TeamController implements BaseballController {
 
     @Override
     public boolean validateParameter(HashMap<String, String> map) {
-        if (map.containsKey("name") && map.containsKey("stadiumId")) {
+        if (map.containsKey("name") && map.containsKey("stadiumId") && map.size() == 2) {
             return true;
         }
         throw new IllegalParameterException(ErrorMessage.ERR_MSG_ILLEGAL_PARAMETER);
