@@ -2,16 +2,17 @@ package dao;
 
 import domain.Player;
 import domain.Position;
-import domain.TeamName;
+import dto.PositionTeamPlayerDto;
 import lombok.Cleanup;
+import lombok.extern.log4j.Log4j2;
 import mapper.PlayerMapper;
 
 import java.sql.*;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
+@Log4j2
 public class PlayerDao extends AbstractMybatisDao {
 
     private static final PlayerDao INSTANCE = new PlayerDao();
@@ -36,26 +37,35 @@ public class PlayerDao extends AbstractMybatisDao {
         return mapper.selectListByTeamId(teamId);
     }
 
-    public Map<Position, Map<TeamName, String>> selectListForEachTeamByPosition() throws SQLException {
-        Map<Position, Map<TeamName, String>> ret = new HashMap<>();
-        Arrays.stream(Position.values()).forEach(position -> ret.put(position, new HashMap<>()));
+    public PositionTeamPlayerDto selectListForEachTeamByPosition() throws SQLException {
+        List<String> teamNames = new LinkedList<>();
+        LinkedHashMap<Position, List<String>> positionToPlayers = new LinkedHashMap<>();
 
         @Cleanup Connection conn = session.getConnection();
-        @Cleanup CallableStatement callStmt = conn.prepareCall("{call select_position_team_player()}");
-        @Cleanup ResultSet resultSet = callStmt.executeQuery();
+        @Cleanup CallableStatement callStmt = conn.prepareCall("{call select_position_team_player}");
+        callStmt.execute();
+        for (int i = 0; i < 3; ++i) {
+            callStmt.getResultSet();
+            callStmt.getMoreResults();
+        }
+        @Cleanup ResultSet resultSet = callStmt.getResultSet();
         ResultSetMetaData metaData = resultSet.getMetaData();
-        int size = metaData.getColumnCount();
+        int columnSize = metaData.getColumnCount();
+        for (int i = 2; i <= columnSize; ++i)
+            teamNames.add(metaData.getColumnName(i));
         while (resultSet.next()) {
             String positionName = resultSet.getString(1);
             Position position = Position.getByDescription(positionName);
-            Map<TeamName, String> teamToPlayerMap = new HashMap<>();
-            for (int i = 2; i <= size; ++i) {
-                TeamName teamName = TeamName.valueOf(metaData.getColumnName(i));
+            List<String> playerNames = new LinkedList<>();
+            for (int i = 2; i <= columnSize; ++i) {
                 String playerName = resultSet.getString(i);
-                teamToPlayerMap.put(teamName, playerName);
+                playerNames.add(playerName);
             }
-            ret.put(position, teamToPlayerMap);
+            positionToPlayers.put(position, playerNames);
         }
-        return ret;
+        return PositionTeamPlayerDto.builder()
+                .teamNames(teamNames)
+                .positionToPlayers(positionToPlayers)
+                .build();
     }
 }
