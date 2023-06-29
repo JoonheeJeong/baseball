@@ -13,4 +13,8 @@
         select * from player where team_id = #{teamId}
     </select>
 
+    <update id="updateRetiredById">
+        update player set team_id = null where id = #{id}
+    </update>
+
 </mapper>
