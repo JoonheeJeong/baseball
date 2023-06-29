@@ -1,6 +1,7 @@
 package service;
 
 import dao.OutPlayerDao;
+import dao.PlayerDao;
 import domain.OutPlayer;
 import domain.Reason;
 import dto.OutPlayerResponseDTO;
@@ -17,9 +18,11 @@ public class OutPlayerService implements BaseBallService {
 
     private static OutPlayerService INSTANCE;
     private final OutPlayerDao outPlayerDao;
+    private final PlayerDao playerDao;
 
     private OutPlayerService() {
         outPlayerDao = OutPlayerDao.getInstance();
+        playerDao = PlayerDao.getInstance();
     }
 
     public static OutPlayerService getInstance() {
@@ -33,6 +36,7 @@ public class OutPlayerService implements BaseBallService {
     public void register(HashMap<String, String> map) {
         try {
             outPlayerDao.setSqlSessionFactory(get());
+            playerDao.setSqlSessionFactory(get());
             OutPlayer outPlayer = OutPlayer.builder()
                     .playerId(Long.valueOf(map.get("playerId")))
                     .reason(Reason.getByDescription(map.get("reason")))
@@ -40,8 +44,8 @@ public class OutPlayerService implements BaseBallService {
             try {
                 outPlayerDao.insert(outPlayer, true);
                 outPlayerDao.commit();
-                outPlayerDao.updateById(Long.valueOf(map.get("playerId")), true);
-                outPlayerDao.commit();
+                playerDao.updateRetiredById(Long.valueOf(map.get("playerId")), true);
+                playerDao.commit();
                 log.info(ResponseMessage.SERVICE_SUCCESS);
             } catch (Exception e) {
                 outPlayerDao.rollback();
