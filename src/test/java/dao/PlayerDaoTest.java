@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +41,7 @@ public class PlayerDaoTest {
         Exception e = assertThrows(
                 PersistenceException.class,
                 () -> playerDao.insert(playerToInsert, true));
-//        assertEquals(JdbcSQLIntegrityConstraintViolationException.class, e.getCause().getClass());
+        assertEquals(SQLIntegrityConstraintViolationException.class, e.getCause().getClass());
     }
 
     @Test
