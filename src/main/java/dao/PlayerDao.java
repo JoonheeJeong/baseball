@@ -42,11 +42,10 @@ public class PlayerDao extends AbstractMybatisDao {
         @Cleanup Connection conn = session.getConnection();
         @Cleanup CallableStatement callStmt = conn.prepareCall("{call select_position_team_player}");
         callStmt.execute();
-        for (int i = 0; i < 3; ++i) {
-            callStmt.getResultSet();
-            callStmt.getMoreResults();
-        }
-        @Cleanup ResultSet resultSet = callStmt.getResultSet();
+        ResultSet resultSet;
+        do {
+           resultSet = callStmt.getResultSet();
+        } while (callStmt.getMoreResults());
         ResultSetMetaData metaData = resultSet.getMetaData();
         int columnSize = metaData.getColumnCount();
         for (int i = 2; i <= columnSize; ++i)
@@ -61,6 +60,7 @@ public class PlayerDao extends AbstractMybatisDao {
             }
             positionToPlayers.put(position, playerNames);
         }
+        resultSet.close();
         return PositionTeamPlayerDto.builder()
                 .teamNames(teamNames)
                 .positionToPlayers(positionToPlayers)
