@@ -9,7 +9,11 @@ import java.util.StringTokenizer;
 public interface BaseballController {
     void insert(String queryString);
 
-    void select(String queryString);
+    void select();
+
+    default void select(String queryString) {
+
+    };
 
     boolean validateParameter(HashMap<String, String> map);
 
@@ -21,7 +25,9 @@ public interface BaseballController {
             String key = getParameterToken.nextToken();
             String value = getParameterToken.nextToken();
 
-            if (map.containsKey(key)) throw new IllegalParameterException(ErrorMessage.ERR_MSG_ILLEGAL_PARAMETER_TYPE);
+            if (map.containsKey(key))
+                throw new IllegalParameterException(ErrorMessage.ERR_MSG_ILLEGAL_PARAMETER_TYPE);
+
             map.put(key, value);
         }
         return map;

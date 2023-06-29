@@ -49,6 +49,11 @@ public class PlayerService implements BaseBallService {
     }
 
     @Override
+    public void show() {
+
+    }
+
+    @Override
     public void show(HashMap<String, String> map) {
         try {
             playerDao.setSqlSessionFactory(get());

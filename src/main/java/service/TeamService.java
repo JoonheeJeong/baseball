@@ -48,7 +48,7 @@ public class TeamService implements BaseBallService {
     }
 
     @Override
-    public void show(HashMap<String, String> map) {
+    public void show() {
         try {
             teamDao.setSqlSessionFactory(get());
             List<TeamResponseDTO> teamList = teamDao.selectAll();

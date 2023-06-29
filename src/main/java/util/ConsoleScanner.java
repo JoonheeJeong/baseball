@@ -5,6 +5,7 @@ import exception.IllegalParameterException;
 import lombok.extern.log4j.Log4j2;
 import util.annotation.Controller;
 import util.annotation.RequestMapping;
+import util.annotation.RequestMethod;
 import util.messages.ErrorMessage;
 import util.messages.ResponseMessage;
 
@@ -96,9 +97,16 @@ public class ConsoleScanner {
                     Annotation anno = mt.getDeclaredAnnotation(RequestMapping.class);
                     if (anno instanceof RequestMapping) {
                         RequestMapping requestMapping = (RequestMapping) anno;
-                        if (requestMapping.uri().equals(uri)) {
+                        if (requestMapping.uri().equals(uri) && requestMapping.method().equals(RequestMethod.POST)) {
                             isFind = true;
                             mt.invoke(instance, queryString);
+                        } else if (requestMapping.uri().equals(uri) && requestMapping.method().equals(RequestMethod.GET)) {
+                            isFind = true;
+                            try {
+                                mt.invoke(instance);
+                            } catch (IllegalArgumentException e) {
+                                mt.invoke(instance, queryString);
+                            }
                         }
                     }
                 }
