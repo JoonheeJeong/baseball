@@ -3,7 +3,9 @@ package service;
 import dao.TeamDao;
 import domain.Team;
 import dto.TeamResponseDTO;
+import util.messages.ErrorMessage;
 import lombok.extern.log4j.Log4j2;
+import util.messages.ResponseMessage;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -36,7 +38,7 @@ public class TeamService implements BaseBallService {
                     .build();
             teamDao.insert(team, true);
             teamDao.commit();
-            log.info("성공");
+            log.info(ResponseMessage.SERVICE_SUCCESS);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

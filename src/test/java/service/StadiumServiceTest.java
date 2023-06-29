@@ -2,52 +2,36 @@ package service;
 
 import dao.StadiumDao;
 import domain.Stadium;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import lombok.extern.log4j.Log4j2;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 
-class StadiumServiceTest {
-
-    private static StadiumDao stadiumDao;
-    private static StadiumService stadiumService;
+@Log4j2
+public class StadiumServiceTest {
+    static  StadiumService stadiumService;
+    static StadiumDao stadiumDao;
+    static HashMap<String, String> map;
 
     @BeforeAll
-    static void init() throws IOException {
-        String resource = "mapper/mybatis-config.xml";
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+    static
+    void init() {
+        stadiumService = StadiumService.getInstance();
         stadiumDao = StadiumDao.getInstance();
-        stadiumDao.setSqlSessionFactory(sqlSessionFactory);
-        //stadiumService = new StadiumService();
+        map = new HashMap<>();
     }
 
-
     @Test
-    void registerStadium() {
-
+    void insertTest() {
         //given
-        HashMap<String, String> map = new HashMap<>();
-        map.put("name", "고척스카이돔12");
+        map.put("name", "선곡베이스볼파크");
         //when
         stadiumService.register(map);
         //then
-    }
-
-    @Test
-    void showStadium() {
-
-        //given
-        Stadium stadium1 = Stadium.builder().id((long) 1).name("Stadium1").build();
-        Stadium stadium2 = Stadium.builder().id((long) 2).name("Stadium2").build();
-        Stadium stadium3 = Stadium.builder().id((long) 3).name("Stadium2").build();
-        Stadium stadium4 = Stadium.builder().id((long) 4).name("Stadium2").build();
-        //when
-        //stadiumService.show();
+        Assertions.assertTrue(stadiumDao.selectAll()
+                .stream().map(Stadium::getName)
+                .anyMatch(name -> name.equals(map.get("name"))));
     }
 }

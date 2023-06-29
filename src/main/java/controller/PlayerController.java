@@ -1,5 +1,6 @@
 package controller;
 
+import util.messages.ErrorMessage;
 import exception.IllegalParameterException;
 import service.BaseBallService;
 import service.PlayerService;
@@ -36,6 +37,6 @@ public class PlayerController implements BaseballController {
         if (map.containsKey("name") && map.containsKey("teamId") && map.containsKey("position")) {
             return true;
         }
-        throw new IllegalParameterException("알맞은 파라미터명이 아닙니다.");
+        throw new IllegalParameterException(ErrorMessage.ERR_MSG_ILLEGAL_PARAMETER);
     }
 }

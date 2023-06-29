@@ -5,6 +5,8 @@ import domain.OutPlayer;
 import domain.Reason;
 import dto.OutPlayerResponseDTO;
 import lombok.extern.log4j.Log4j2;
+import util.messages.ErrorMessage;
+import util.messages.ResponseMessage;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -40,10 +42,10 @@ public class OutPlayerService implements BaseBallService {
                 outPlayerDao.commit();
                 outPlayerDao.updateById(Long.valueOf(map.get("playerId")), true);
                 outPlayerDao.commit();
-                log.info("성공");
+                log.info(ResponseMessage.SERVICE_SUCCESS);
             } catch (Exception e) {
                 outPlayerDao.rollback();
-                log.warn("트랜잭션 오류");
+                log.warn(ErrorMessage.ERR_MSG_TRANSACTION);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
