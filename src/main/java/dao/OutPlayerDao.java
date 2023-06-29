@@ -26,14 +26,6 @@ public class OutPlayerDao extends AbstractMybatisDao {
         mapper.insert(outPlayer);
     }
 
-    public void updateById(Long id, boolean newSession) {
-        if (newSession)
-            manageNewSession();
-
-        OutPlayerMapper mapper = session.getMapper(OutPlayerMapper.class);
-        mapper.updateById(id);
-    }
-
     public List<OutPlayerResponseDTO> selectAll() {
         OutPlayerMapper mapper = session.getMapper(OutPlayerMapper.class);
         return mapper.selectAll();
