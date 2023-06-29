@@ -4,7 +4,6 @@ import domain.Player;
 import domain.Position;
 import dto.PositionTeamPlayerDto;
 import lombok.Cleanup;
-import lombok.extern.log4j.Log4j2;
 import mapper.PlayerMapper;
 
 import java.sql.*;
@@ -12,7 +11,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-@Log4j2
 public class PlayerDao extends AbstractMybatisDao {
 
     private static final PlayerDao INSTANCE = new PlayerDao();
@@ -67,5 +65,13 @@ public class PlayerDao extends AbstractMybatisDao {
                 .teamNames(teamNames)
                 .positionToPlayers(positionToPlayers)
                 .build();
+    }
+
+    public void updateRetiredById(Long id, boolean newSession) {
+        if (newSession)
+            manageNewSession();
+
+        PlayerMapper mapper = session.getMapper(PlayerMapper.class);
+        mapper.updateRetiredById(id);
     }
 }
