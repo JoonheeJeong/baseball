@@ -12,7 +12,7 @@ import java.util.HashMap;
 @Controller
 public class OutPlayerController implements BaseballController {
 
-    private BaseBallService outPlayerService;
+    private final BaseBallService outPlayerService;
 
     public OutPlayerController() {
         this.outPlayerService = OutPlayerService.getInstance();

@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 @Controller
 public class StadiumController implements BaseballController {
-    private BaseBallService stadiumService;
+    private final BaseBallService stadiumService;
 
     public StadiumController() {
         this.stadiumService = StadiumService.getInstance();

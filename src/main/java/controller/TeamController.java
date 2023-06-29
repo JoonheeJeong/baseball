@@ -12,7 +12,7 @@ import java.util.HashMap;
 @Controller
 public class TeamController implements BaseballController {
 
-    private BaseBallService teamService;
+    private final BaseBallService teamService;
 
     public TeamController() {
         this.teamService = TeamService.getInstance();
