@@ -36,7 +36,7 @@ public class ConsoleScanner {
 
     public void consoleMenu() {
         try {
-            Set<Class> classes = componentScan("controller");
+            Set<Class> classes = componentScan();
             while (true) {
                 try {
                     log.info(ResponseMessage.SERVICE_ASK);
@@ -70,15 +70,15 @@ public class ConsoleScanner {
         return map;
     }
 
-    private static Set<Class> componentScan(String pack) throws URISyntaxException, ClassNotFoundException {
+    private static Set<Class> componentScan() throws URISyntaxException, ClassNotFoundException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Set<Class> classes = new HashSet<>();
 
-        URL packUrl = classLoader.getResource(pack);
+        URL packUrl = classLoader.getResource("controller");
         File packDir = new File(packUrl.toURI());
-        for (File file : packDir.listFiles()) {
+        for (File file : Objects.requireNonNull(packDir.listFiles())) {
             if (file.getName().endsWith(".class")) {
-                String className = pack + '.' + file.getName().replace(".class", "");
+                String className = "controller" + '.' + file.getName().replace(".class", "");
                 Class cls = Class.forName(className);
                 classes.add(cls);
             }
@@ -95,7 +95,7 @@ public class ConsoleScanner {
 
                 for (Method mt : methods) {
                     Annotation anno = mt.getDeclaredAnnotation(RequestMapping.class);
-                    if (anno instanceof RequestMapping) {
+                    if (anno != null) {
                         RequestMapping requestMapping = (RequestMapping) anno;
                         if (requestMapping.uri().equals(uri) && requestMapping.method().equals(RequestMethod.POST)) {
                             isFind = true;
@@ -112,7 +112,7 @@ public class ConsoleScanner {
                 }
             }
         }
-        if (isFind == false)
+        if (!isFind)
             log.warn(ErrorMessage.ERR_MSG_ILLEGAL_COMMAND);
     }
 }
