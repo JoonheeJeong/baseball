@@ -51,7 +51,7 @@ public class ConsoleScanner {
                 } catch (NoSuchElementException e) {
                     log.warn(ErrorMessage.ERR_MSG_NO_SUCH);
                 } catch (InvocationTargetException e) {
-                    log.warn(ErrorMessage.ERR_MSG_ILLEGAL_PARAMETER_TYPE);
+                    log.warn(e.getTargetException());
                 }
             }
         } catch (Exception e) {
