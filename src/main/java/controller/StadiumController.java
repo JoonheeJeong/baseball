@@ -1,10 +1,12 @@
 package controller;
 
 import exception.IllegalParameterException;
+import exception.IllegalRequestTypeException;
 import service.BaseBallService;
 import service.StadiumService;
 import util.annotation.Controller;
 import util.annotation.RequestMapping;
+import util.messages.ErrorMessage;
 
 import java.util.HashMap;
 
@@ -27,16 +29,19 @@ public class StadiumController implements BaseballController {
     @Override
     @RequestMapping(uri = "야구장목록")
     public void select(String queryString) {
+        if (queryString != null) {
+            throw new IllegalRequestTypeException(ErrorMessage.ERR_MSG_ILLEGAL_REQUEST_TYPE);
+        }
         HashMap<String, String> map = null;
         stadiumService.show(map);
     }
 
     @Override
     public boolean validateParameter(HashMap<String, String> map) {
-        if (map.containsKey("name")) {
+        if (map.containsKey("name") && map.size() == 1) {
             return true;
         }
-        throw new IllegalParameterException("알맞은 파라미터명이 아닙니다.");
+        throw new IllegalParameterException(ErrorMessage.ERR_MSG_ILLEGAL_PARAMETER);
     }
 
 

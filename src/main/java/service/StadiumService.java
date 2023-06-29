@@ -2,8 +2,13 @@ package service;
 
 import dao.StadiumDao;
 import domain.Stadium;
+import org.apache.ibatis.exceptions.PersistenceException;
+import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
+import org.h2.message.DbException;
+import util.messages.ErrorMessage;
 import lombok.extern.log4j.Log4j2;
 import util.annotation.Service;
+import util.messages.ResponseMessage;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -33,9 +38,11 @@ public class StadiumService implements BaseBallService {
             Stadium stadium = Stadium.builder().name(map.get("name")).build();
             stadiumDao.insert(stadium, true);
             stadiumDao.commit();
-            log.info("성공");
+            log.info(ResponseMessage.SERVICE_SUCCESS);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (PersistenceException e) {
+            log.warn(ErrorMessage.ERR_MSG_DUPLICATE_PARAMETER);
         }
     }
 
