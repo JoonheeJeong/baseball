@@ -5,6 +5,7 @@ import service.BaseBallService;
 import service.TeamService;
 import util.annotation.Controller;
 import util.annotation.RequestMapping;
+import util.annotation.RequestMethod;
 
 import java.util.HashMap;
 
@@ -18,7 +19,7 @@ public class TeamController implements BaseballController {
     }
 
     @Override
-    @RequestMapping(uri = "팀등록")
+    @RequestMapping(uri = "팀등록", method = RequestMethod.POST)
     public void insert(String queryString) {
         HashMap<String, String> map = parameterParser(queryString);
         validateParameter(map);
@@ -26,7 +27,7 @@ public class TeamController implements BaseballController {
     }
 
     @Override
-    @RequestMapping(uri = "팀목록")
+    @RequestMapping(uri = "팀목록", method = RequestMethod.GET)
     public void select(String queryString) {
         HashMap<String, String> map = null;
         teamService.show(map);
