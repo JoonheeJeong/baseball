@@ -12,7 +12,9 @@ public class StadiumDao extends AbstractMybatisDao {
     private StadiumDao() {
     }
 
-    public static StadiumDao getInstance() { return INSTANCE; }
+    public static StadiumDao getInstance() {
+        return INSTANCE;
+    }
 
     public void insert(Stadium stadium, boolean newSession) {
         if (newSession) {

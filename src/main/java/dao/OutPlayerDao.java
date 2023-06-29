@@ -1,13 +1,12 @@
 package dao;
 
 import domain.OutPlayer;
-import domain.Player;
 import dto.OutPlayerResponseDTO;
 import mapper.OutPlayerMapper;
 
 import java.util.List;
 
-public class OutPlayerDao extends AbstractMybatisDao{
+public class OutPlayerDao extends AbstractMybatisDao {
 
     private static final OutPlayerDao INSTANCE = new OutPlayerDao();
 
@@ -15,7 +14,9 @@ public class OutPlayerDao extends AbstractMybatisDao{
 
     }
 
-    public static OutPlayerDao getInstance() {return INSTANCE;}
+    public static OutPlayerDao getInstance() {
+        return INSTANCE;
+    }
 
     public void insert(OutPlayer outPlayer, boolean newSession) {
         if (newSession) {

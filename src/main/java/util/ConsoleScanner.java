@@ -43,7 +43,7 @@ public class ConsoleScanner {
 
                     findUri(classes, map.get("command"), map.get("queryString"));
 
-                    if (scanner.equals("종료")) break;
+                    if (request.equals("종료")) break;
 
                 } catch (IllegalParameterException | IllegalCommandException e) {
                     log.warn(e.getMessage());
@@ -57,6 +57,7 @@ public class ConsoleScanner {
             log.warn(e.getMessage());
         }
     }
+
     private HashMap<String, String> requestParser(String request) {
         HashMap<String, String> map = new HashMap<>();
 

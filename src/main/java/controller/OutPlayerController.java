@@ -9,7 +9,7 @@ import util.annotation.RequestMapping;
 import java.util.HashMap;
 
 @Controller
-public class OutPlayerController implements BaseballController{
+public class OutPlayerController implements BaseballController {
 
     private BaseBallService outPlayerService;
 
@@ -20,7 +20,7 @@ public class OutPlayerController implements BaseballController{
     @Override
     @RequestMapping(uri = "퇴출등록")
     public void insert(String queryString) {
-        HashMap<String, String> map =parameterParser(queryString);
+        HashMap<String, String> map = parameterParser(queryString);
         validateParameter(map);
         outPlayerService.register(map);
     }

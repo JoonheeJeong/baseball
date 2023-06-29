@@ -3,7 +3,6 @@ package dao;
 import domain.Player;
 import domain.PositionTeamPlayer;
 import mapper.PlayerMapper;
-import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 
@@ -14,7 +13,9 @@ public class PlayerDao extends AbstractMybatisDao {
     private PlayerDao() {
     }
 
-    public static PlayerDao getInstance() { return INSTANCE; }
+    public static PlayerDao getInstance() {
+        return INSTANCE;
+    }
 
     public void insert(Player player, boolean newSession) {
         if (newSession) {
