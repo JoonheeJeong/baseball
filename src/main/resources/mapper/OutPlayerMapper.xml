@@ -10,14 +10,7 @@
         insert into out_player (player_id, reason) values (#{playerId}, #{reason})
     </insert>
 
-    <resultMap id="outplayer" type="dto.OutPlayerResponseDTO">
-        <id column="id" property="id" />
-        <result column="name" property="name" />
-        <result column="position" property="position" typeHandler="domain.PositionHandler" />
-        <result column="reason" property="reason" />
-        <result column="createdAt" property="createdAt" />
-    </resultMap>
-    <select id="selectAll" resultMap="outplayer">
+    <select id="selectAll" resultType="dto.OutPlayerResponseDTO">
         select p.id as id, p.name as name, p.position as position, o.reason as reason, o.created_at as createdAt
         from player as p left join out_player as o
         on p.id = o.player_id

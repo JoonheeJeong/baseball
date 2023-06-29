@@ -50,7 +50,7 @@ public class TeamDaoTest {
                 .anyMatch(name -> name.equals("한화 이글스")));
         assertTrue(teamList.stream()
                 .map(TeamResponseDTO::getTeamName)
-                .anyMatch(name -> name.equals("두산베어스")));
+                .anyMatch(name -> name.equals("두산 베어스")));
         assertTrue(teamList.stream()
                 .map(TeamResponseDTO::getTeamName)
                 .anyMatch(name -> name.equals("롯데 자이언츠")));
