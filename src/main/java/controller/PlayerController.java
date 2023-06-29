@@ -26,6 +26,11 @@ public class PlayerController implements BaseballController {
     }
 
     @Override
+    public void select() {
+
+    }
+
+    @Override
     @RequestMapping(uri = "선수목록", method = RequestMethod.GET)
     public void select(String queryString) {
         HashMap<String, String> map = parameterParser(queryString);

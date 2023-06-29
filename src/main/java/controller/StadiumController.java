@@ -27,9 +27,8 @@ public class StadiumController implements BaseballController {
 
     @Override
     @RequestMapping(uri = "야구장목록", method = RequestMethod.GET)
-    public void select(String queryString) {
-        HashMap<String, String> map = null;
-        stadiumService.show(map);
+    public void select() {
+        stadiumService.show();
     }
 
     @Override

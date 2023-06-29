@@ -28,9 +28,8 @@ public class OutPlayerController implements BaseballController {
 
     @Override
     @RequestMapping(uri = "퇴출목록", method = RequestMethod.GET)
-    public void select(String queryString) {
-        HashMap<String, String> map = null;
-        outPlayerService.show(map);
+    public void select() {
+        outPlayerService.show();
     }
 
     @Override
