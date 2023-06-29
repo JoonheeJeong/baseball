@@ -2,12 +2,10 @@ package service;
 
 import dao.StadiumDao;
 import domain.Stadium;
-import org.apache.ibatis.exceptions.PersistenceException;
-import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
-import org.h2.message.DbException;
-import util.messages.ErrorMessage;
 import lombok.extern.log4j.Log4j2;
+import org.apache.ibatis.exceptions.PersistenceException;
 import util.annotation.Service;
+import util.messages.ErrorMessage;
 import util.messages.ResponseMessage;
 
 import java.io.IOException;
@@ -26,9 +24,9 @@ public class StadiumService implements BaseBallService {
     }
 
     public static StadiumService getInstance() {
-        if (INSTANCE == null) {
+        if (INSTANCE == null)
             INSTANCE = new StadiumService();
-        }
+
         return INSTANCE;
     }
 

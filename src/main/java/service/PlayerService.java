@@ -23,9 +23,9 @@ public class PlayerService implements BaseBallService {
     }
 
     public static PlayerService getInstance() {
-        if (INSTANCE == null) {
+        if (INSTANCE == null)
             INSTANCE = new PlayerService();
-        }
+
         return INSTANCE;
     }
 

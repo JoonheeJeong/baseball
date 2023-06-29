@@ -18,9 +18,8 @@ public class PlayerDao extends AbstractMybatisDao {
     }
 
     public void insert(Player player, boolean newSession) {
-        if (newSession) {
+        if (newSession)
             manageNewSession();
-        }
 
         PlayerMapper mapper = session.getMapper(PlayerMapper.class);
         mapper.insert(player);

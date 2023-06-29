@@ -3,9 +3,9 @@ package service;
 import dao.TeamDao;
 import domain.Team;
 import dto.TeamResponseDTO;
+import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.exceptions.PersistenceException;
 import util.messages.ErrorMessage;
-import lombok.extern.log4j.Log4j2;
 import util.messages.ResponseMessage;
 
 import java.io.IOException;
@@ -23,9 +23,9 @@ public class TeamService implements BaseBallService {
     }
 
     public static TeamService getInstance() {
-        if (INSTANCE == null) {
+        if (INSTANCE == null)
             INSTANCE = new TeamService();
-        }
+
         return INSTANCE;
     }
 

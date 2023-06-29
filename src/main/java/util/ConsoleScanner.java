@@ -25,9 +25,9 @@ public class ConsoleScanner {
     }
 
     public static ConsoleScanner getConsoleInstance() {
-        if (consoleInstance == null) {
+        if (consoleInstance == null)
             consoleInstance = new ConsoleScanner();
-        }
+
         return consoleInstance;
     }
 
@@ -63,9 +63,9 @@ public class ConsoleScanner {
 
         StringTokenizer commandToken = new StringTokenizer(request, "?");
         map.put("command", commandToken.nextToken());
-        if (commandToken.hasMoreTokens()) {
+        if (commandToken.hasMoreTokens())
             map.put("queryString", commandToken.nextToken());
-        }
+
         return map;
     }
 
@@ -104,8 +104,7 @@ public class ConsoleScanner {
                 }
             }
         }
-        if (isFind == false) {
+        if (isFind == false)
             log.warn(ErrorMessage.ERR_MSG_ILLEGAL_COMMAND);
-        }
     }
 }

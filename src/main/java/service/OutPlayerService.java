@@ -23,9 +23,9 @@ public class OutPlayerService implements BaseBallService {
     }
 
     public static OutPlayerService getInstance() {
-        if (INSTANCE == null) {
+        if (INSTANCE == null)
             INSTANCE = new OutPlayerService();
-        }
+
         return INSTANCE;
     }
 
