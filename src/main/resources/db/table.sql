@@ -12,10 +12,10 @@ create table stadium (
 );
 
 create table team (
-    id          bigint          auto_increment,
+    id          bigint      auto_increment,
     stadium_id  bigint,
-    name        varchar(32)     not null unique,
-    created_at  timestamp       not null default now(),
+    name        varchar(8)  not null unique,
+    created_at  timestamp   not null default now(),
     primary key (id),
     foreign key (stadium_id) references stadium(id)
 );
@@ -26,8 +26,6 @@ create table position_t (
     abbreviation    varchar(3)  character set `binary` collate `binary` not null unique,
     description     varchar(4)  not null unique
 );
-
-select * from position_t;
 
 create table player (
     id          bigint          auto_increment,
