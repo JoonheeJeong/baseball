@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Log4j2
 public class PlayerDaoTest {
@@ -78,9 +78,16 @@ public class PlayerDaoTest {
 
     @Test
     void updateRetiredById() {
-        final Long playerId = 20L;
+        final Long retiredPlayerId = 28L;
 
-        playerDao.updateRetiredById(playerId, true);
+        playerDao.updateRetiredById(retiredPlayerId, true);
+
+        List<Player> playerList = playerDao.selectListByTeamId(4L);
+        Optional<Long> idOptional = playerList.stream()
+                .map(Player::getId)
+                .filter(id -> id.equals(retiredPlayerId))
+                .findAny();
+        assertTrue(idOptional.isEmpty());
 
         playerDao.rollback();
     }
