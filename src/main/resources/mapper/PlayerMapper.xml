@@ -6,10 +6,9 @@
 <mapper namespace="mapper.PlayerMapper">
 
     <insert id="insert">
-        <bind name="positionDescription" value="_parameter.getPosition().getDescription()"/>
-        insert into player (team_id, name, position) values (#{teamId}, #{name}, #{positionDescription})
+        insert into player (team_id, name, position) values (#{teamId}, #{name}, #{position})
     </insert>
-    
+
     <resultMap id="player1" type="domain.Player">
         <id column="id" property="id" />
         <result column="team_id" property="teamId" />
