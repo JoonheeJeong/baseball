@@ -6,13 +6,25 @@
 <mapper namespace="mapper.OutPlayerMapper">
 
     <insert id="insert">
+        <bind name="reasonDescription" value="_parameter.getReason().getDescription()"/>
         insert into out_player (player_id, reason) values (#{playerId}, #{reason})
     </insert>
 
-    <select id="selectAll" resultType="dto.OutPlayerResponseDTO">
-        select p.id as id, p.name as name, p.position as poistion, o.reason as reason, o.created_at as createdAt
+    <resultMap id="outplayer" type="dto.OutPlayerResponseDTO">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="position" property="position" typeHandler="domain.PositionHandler" />
+        <result column="reason" property="reason" />
+        <result column="createdAt" property="createdAt" />
+    </resultMap>
+    <select id="selectAll" resultMap="outplayer">
+        select p.id as id, p.name as name, p.position as position, o.reason as reason, o.created_at as createdAt
         from player as p left join out_player as o
         on p.id = o.player_id
     </select>
+    
+    <update id="updateById">
+        update player set team_id = null where id = #{id}
+    </update>
 
 </mapper>

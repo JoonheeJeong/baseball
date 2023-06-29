@@ -1,6 +1,7 @@
 package dao;
 
 import domain.OutPlayer;
+import domain.Player;
 import dto.OutPlayerResponseDTO;
 import mapper.OutPlayerMapper;
 
@@ -23,6 +24,15 @@ public class OutPlayerDao extends AbstractMybatisDao{
 
         OutPlayerMapper mapper = session.getMapper(OutPlayerMapper.class);
         mapper.insert(outPlayer);
+    }
+
+    public void updateById(Long id, boolean newSession) {
+        if (newSession) {
+            manageNewSession();
+        }
+
+        OutPlayerMapper mapper = session.getMapper(OutPlayerMapper.class);
+        mapper.updateById(id);
     }
 
     public List<OutPlayerResponseDTO> selectAll() {
