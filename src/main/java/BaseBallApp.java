@@ -1,7 +1,9 @@
-import console.Menu;
+import util.ConsoleScanner;
+
+import java.util.Set;
 
 public class BaseBallApp {
     public static void main(String[] args) {
-        Menu.getInstance().consoleMenu();
+        ConsoleScanner.getConsoleInstance().consoleMenu();
     }
 }

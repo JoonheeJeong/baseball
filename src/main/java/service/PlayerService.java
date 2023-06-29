@@ -5,17 +5,27 @@ import domain.Player;
 import domain.Position;
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.exceptions.PersistenceException;
-import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
 @Log4j2
 public class PlayerService implements BaseBallService {
 
-    private final PlayerDao playerDao = PlayerDao.getInstance();
+    private static PlayerService INSTANCE;
+    private final PlayerDao playerDao;
+
+    private PlayerService() {
+        playerDao = PlayerDao.getInstance();
+    }
+
+    public static PlayerService getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new PlayerService();
+        }
+        return INSTANCE;
+    }
 
     @Override
     public void register(HashMap<String, String> map) {
@@ -40,8 +50,8 @@ public class PlayerService implements BaseBallService {
     public void show(HashMap<String, String> map) {
         try {
             playerDao.setSqlSessionFactory(get());
-            List<Player> stadiumList = playerDao.selectListByTeamId(Long.valueOf(map.get("teamId")));
-            for (Player player : stadiumList) {
+            List<Player> playerList = playerDao.selectListByTeamId(Long.valueOf(map.get("teamId")));
+            for (Player player : playerList) {
                 log.info(player);
             }
         } catch (IOException e) {

@@ -14,7 +14,9 @@ public class TeamDao extends AbstractMybatisDao {
     private TeamDao() {
     }
 
-    public static TeamDao getInstance() { return INSTANCE; }
+    public static TeamDao getInstance() {
+        return INSTANCE;
+    }
 
     public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
         this.sqlSessionFactory = sqlSessionFactory;

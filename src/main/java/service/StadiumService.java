@@ -3,15 +3,29 @@ package service;
 import dao.StadiumDao;
 import domain.Stadium;
 import lombok.extern.log4j.Log4j2;
+import util.annotation.Service;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
 @Log4j2
+@Service
 public class StadiumService implements BaseBallService {
 
-    private final StadiumDao stadiumDao = StadiumDao.getInstance();
+    private static StadiumService INSTANCE;
+    private final StadiumDao stadiumDao;
+
+    private StadiumService() {
+        stadiumDao = StadiumDao.getInstance();
+    }
+
+    public static StadiumService getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new StadiumService();
+        }
+        return INSTANCE;
+    }
 
     public void register(HashMap<String, String> map) {
         try {
