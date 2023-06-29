@@ -5,20 +5,21 @@ import service.BaseBallService;
 import service.OutPlayerService;
 import util.annotation.Controller;
 import util.annotation.RequestMapping;
+import util.annotation.RequestMethod;
 
 import java.util.HashMap;
 
 @Controller
 public class OutPlayerController implements BaseballController {
 
-    private BaseBallService outPlayerService;
+    private final BaseBallService outPlayerService;
 
     public OutPlayerController() {
         this.outPlayerService = OutPlayerService.getInstance();
     }
 
     @Override
-    @RequestMapping(uri = "퇴출등록")
+    @RequestMapping(uri = "퇴출등록", method = RequestMethod.POST)
     public void insert(String queryString) {
         HashMap<String, String> map = parameterParser(queryString);
         validateParameter(map);
@@ -26,10 +27,9 @@ public class OutPlayerController implements BaseballController {
     }
 
     @Override
-    @RequestMapping(uri = "퇴출목록")
-    public void select(String queryString) {
-        HashMap<String, String> map = null;
-        outPlayerService.show(map);
+    @RequestMapping(uri = "퇴출목록", method = RequestMethod.GET)
+    public void select() {
+        outPlayerService.show();
     }
 
     @Override

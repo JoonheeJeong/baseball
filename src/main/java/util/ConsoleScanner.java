@@ -5,6 +5,7 @@ import exception.IllegalParameterException;
 import lombok.extern.log4j.Log4j2;
 import util.annotation.Controller;
 import util.annotation.RequestMapping;
+import util.annotation.RequestMethod;
 import util.messages.ErrorMessage;
 import util.messages.ResponseMessage;
 
@@ -33,7 +34,7 @@ public class ConsoleScanner {
 
     public void consoleMenu() {
         try {
-            Set<Class> classes = componentScan("controller");
+            Set<Class> classes = controllerScan();
             while (true) {
                 try {
                     log.info(ResponseMessage.SERVICE_ASK);
@@ -48,7 +49,7 @@ public class ConsoleScanner {
                 } catch (NoSuchElementException e) {
                     log.warn(ErrorMessage.ERR_MSG_NO_SUCH);
                 } catch (InvocationTargetException e) {
-                    log.warn(ErrorMessage.ERR_MSG_ILLEGAL_PARAMETER_TYPE);
+                    log.warn(e.getTargetException());
                 }
             }
         } catch (Exception e) {
@@ -67,32 +68,43 @@ public class ConsoleScanner {
         return map;
     }
 
-    private static Set<Class> componentScan(String pack) throws URISyntaxException, ClassNotFoundException {
+    private static Set<Class> controllerScan() throws URISyntaxException, ClassNotFoundException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Set<Class> classes = new HashSet<>();
+        final String pkg = "controller";
 
-        URL packUrl = classLoader.getResource(pack);
-        File packDir = new File(packUrl.toURI());
-        for (File file : packDir.listFiles()) {
+        URL pkgUrl = classLoader.getResource(pkg);
+        File pkgDir = new File(pkgUrl.toURI());
+        for (File file : Objects.requireNonNull(pkgDir.listFiles())) {
             if (file.getName().endsWith(".class")) {
-                String className = pack + '.' + file.getName().replace(".class", "");
+                String className = pkg + '.' + file.getName().replace(".class", "");
                 Class cls = Class.forName(className);
-                classes.add(cls);
+                if (cls.isAnnotationPresent(Controller.class))
+                    classes.add(cls);
             }
         }
         return classes;
     }
 
-    private static void runMatchedMethodIfExists(Set<Class> classes, String uri, String queryString) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        for (Class<?> cls : classes) {
-            if (cls.isAnnotationPresent(Controller.class)) {
-                Method[] methods = cls.getDeclaredMethods();
-                for (Method mt : methods) {
-                    RequestMapping requestMapping = mt.getDeclaredAnnotation(RequestMapping.class);
-                    if (requestMapping != null && uri.equals(requestMapping.uri())) {
+    private static void runMatchedMethodIfExists(Set<Class> controllers, String uri, String queryString) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        for (Class<?> cls : controllers) {
+            Method[] methods = cls.getDeclaredMethods();
+            for (Method mt : methods) {
+                RequestMapping requestMapping = mt.getDeclaredAnnotation(RequestMapping.class);
+                if (requestMapping != null) {
+                    if (requestMapping.uri().equals(uri)) {
                         Object instance = cls.getDeclaredConstructor().newInstance();
-                        mt.invoke(instance, queryString);
-                        return;
+                        if (requestMapping.method().equals(RequestMethod.POST)) {
+                            mt.invoke(instance, queryString);
+                            return;
+                        } else if (requestMapping.method().equals(RequestMethod.GET)) {
+                            try {
+                                mt.invoke(instance);
+                            } catch (IllegalArgumentException e) {
+                                mt.invoke(instance, queryString);
+                            }
+                            return;
+                        }
                     }
                 }
             }

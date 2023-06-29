@@ -57,7 +57,7 @@ public class OutPlayerService implements BaseBallService {
     }
 
     @Override
-    public void show(HashMap<String, String> map) {
+    public void show() {
         try {
             outPlayerDao.setSqlSessionFactory(get());
             List<OutPlayerResponseDTO> outPlayerList = outPlayerDao.selectAll();
