@@ -5,7 +5,7 @@ insert into stadium (name) values ('사직 야구장');
 insert into team (STADIUM_ID, NAME) values ( 1, '한화 이글스' );
 insert into team (STADIUM_ID, NAME) values ( 2, '두산 베어스' );
 insert into team (STADIUM_ID, NAME) values ( 3, '롯데 자이언츠' );
-insert into team (STADIUM_ID, NAME) values ( 1, '패스트캠퍼스 백엔드 부트캠프 5기' );
+insert into team (STADIUM_ID, NAME) values ( 1, '패스트캠퍼스' );
 
 insert into position_t values (1, 'Pitcher', 'P', '투수');
 insert into position_t values (2, 'Catcher', 'C', '포수');

@@ -6,5 +6,4 @@ as select pos.description as position, pl.name as name, team.name as team_name
    where pl.position = pos.abbreviation and pl.team_id = team.id
    order by team_name, pos.id;
 
-select *
-from position_team_player;
+select * from position_team_player;

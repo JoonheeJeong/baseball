@@ -1,7 +1,6 @@
 package mapper;
 
 import domain.Player;
-import domain.PositionTeamPlayer;
 
 import java.util.List;
 
