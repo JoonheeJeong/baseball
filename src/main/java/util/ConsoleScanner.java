@@ -50,14 +50,13 @@ public class ConsoleScanner {
                 } catch (NoSuchElementException e) {
                     log.warn("입력되지 않은 값이 있습니다.");
                 } catch (InvocationTargetException e) {
-                    log.warn("알맞은 파라미터 형식이 아닙니다.");
+                    log.warn(e.getTargetException());
                 }
             }
         } catch (Exception e) {
             log.warn(e.getMessage());
         }
     }
-
     private HashMap<String, String> requestParser(String request) {
         HashMap<String, String> map = new HashMap<>();
 

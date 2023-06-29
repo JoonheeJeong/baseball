@@ -50,8 +50,8 @@ public class PlayerService implements BaseBallService {
     public void show(HashMap<String, String> map) {
         try {
             playerDao.setSqlSessionFactory(get());
-            List<Player> stadiumList = playerDao.selectListByTeamId(Long.valueOf(map.get("teamId")));
-            for (Player player : stadiumList) {
+            List<Player> playerList = playerDao.selectListByTeamId(Long.valueOf(map.get("teamId")));
+            for (Player player : playerList) {
                 log.info(player);
             }
         } catch (IOException e) {

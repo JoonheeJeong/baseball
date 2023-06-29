@@ -15,7 +15,7 @@
         <result column="team_id" property="teamId" />
         <result column="name" property="name" />
         <result column="position" property="position" typeHandler="domain.PositionHandler" />
-        <result column="create_at" property="createdAt" />
+        <result column="created_at" property="createdAt" />
     </resultMap>
     <select id="selectListByTeamId" resultMap="player1">
         select * from player where team_id = #{teamId}
