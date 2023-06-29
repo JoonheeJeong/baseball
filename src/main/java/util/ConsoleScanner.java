@@ -9,7 +9,6 @@ import util.messages.ErrorMessage;
 import util.messages.ResponseMessage;
 
 import java.io.File;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URISyntaxException;
@@ -21,7 +20,6 @@ public class ConsoleScanner {
     private static ConsoleScanner consoleInstance;
 
     private ConsoleScanner() {
-
     }
 
     public static ConsoleScanner getConsoleInstance() {
@@ -31,7 +29,7 @@ public class ConsoleScanner {
         return consoleInstance;
     }
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public void consoleMenu() {
         try {
@@ -40,11 +38,11 @@ public class ConsoleScanner {
                 try {
                     log.info(ResponseMessage.SERVICE_ASK);
                     String request = scanner.nextLine();
-                    if (request.equals(ResponseMessage.SERVICE_OFF)) break;
+                    if (request.equals(ResponseMessage.SERVICE_OFF))
+                        break;
 
-                    HashMap<String, String> map = new HashMap<>();
-                    map = requestParser(request);
-                    findUri(classes, map.get("command"), map.get("queryString"));
+                    HashMap<String, String> map = requestParser(request);
+                    runMatchedMethodIfExists(classes, map.get("command"), map.get("queryString"));
                 } catch (IllegalParameterException | IllegalCommandException e) {
                     log.warn(e.getMessage());
                 } catch (NoSuchElementException e) {
@@ -54,7 +52,7 @@ public class ConsoleScanner {
                 }
             }
         } catch (Exception e) {
-            log.warn(e.getMessage());
+            log.error(e.getMessage());
         }
     }
 
@@ -85,26 +83,20 @@ public class ConsoleScanner {
         return classes;
     }
 
-    private static void findUri(Set<Class> classes, String uri, String queryString) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        boolean isFind = false;
+    private static void runMatchedMethodIfExists(Set<Class> classes, String uri, String queryString) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         for (Class<?> cls : classes) {
             if (cls.isAnnotationPresent(Controller.class)) {
-                Object instance = cls.getDeclaredConstructor().newInstance();
                 Method[] methods = cls.getDeclaredMethods();
-
                 for (Method mt : methods) {
-                    Annotation anno = mt.getDeclaredAnnotation(RequestMapping.class);
-                    if (anno instanceof RequestMapping) {
-                        RequestMapping requestMapping = (RequestMapping) anno;
-                        if (requestMapping.uri().equals(uri)) {
-                            isFind = true;
-                            mt.invoke(instance, queryString);
-                        }
+                    RequestMapping requestMapping = mt.getDeclaredAnnotation(RequestMapping.class);
+                    if (requestMapping != null && uri.equals(requestMapping.uri())) {
+                        Object instance = cls.getDeclaredConstructor().newInstance();
+                        mt.invoke(instance, queryString);
+                        return;
                     }
                 }
             }
         }
-        if (isFind == false)
-            log.warn(ErrorMessage.ERR_MSG_ILLEGAL_COMMAND);
+        log.warn(ErrorMessage.ERR_MSG_ILLEGAL_COMMAND);
     }
 }
