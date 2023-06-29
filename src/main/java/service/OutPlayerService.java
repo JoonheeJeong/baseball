@@ -40,6 +40,7 @@ public class OutPlayerService implements BaseBallService {
                 outPlayerDao.commit();
                 outPlayerDao.updateById(Long.valueOf(map.get("playerId")), true);
                 outPlayerDao.commit();
+                log.info("성공");
             } catch (Exception e) {
                 outPlayerDao.rollback();
                 log.warn("트랜잭션 오류");
