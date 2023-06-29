@@ -57,9 +57,9 @@ public class OutPlayerService implements BaseBallService {
         try {
             outPlayerDao.setSqlSessionFactory(get());
             List<OutPlayerResponseDTO> outPlayerList = outPlayerDao.selectAll();
-            for (OutPlayerResponseDTO outPlayer : outPlayerList) {
+            for (OutPlayerResponseDTO outPlayer : outPlayerList)
                 log.info(outPlayer);
-            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

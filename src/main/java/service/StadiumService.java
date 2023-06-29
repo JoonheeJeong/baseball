@@ -48,9 +48,9 @@ public class StadiumService implements BaseBallService {
         try {
             stadiumDao.setSqlSessionFactory(get());
             List<Stadium> stadiumList = stadiumDao.selectAll();
-            for (Stadium stadium : stadiumList) {
+            for (Stadium stadium : stadiumList)
                 log.info(stadium);
-            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

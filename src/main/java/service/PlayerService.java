@@ -53,9 +53,9 @@ public class PlayerService implements BaseBallService {
         try {
             playerDao.setSqlSessionFactory(get());
             List<Player> playerList = playerDao.selectListByTeamId(Long.valueOf(map.get("teamId")));
-            for (Player player : playerList) {
+            for (Player player : playerList)
                 log.info(player);
-            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

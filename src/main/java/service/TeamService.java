@@ -52,9 +52,9 @@ public class TeamService implements BaseBallService {
         try {
             teamDao.setSqlSessionFactory(get());
             List<TeamResponseDTO> teamList = teamDao.selectAll();
-            for (TeamResponseDTO teamResponseDTO : teamList) {
+            for (TeamResponseDTO teamResponseDTO : teamList)
                 log.info(teamResponseDTO);
-            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
