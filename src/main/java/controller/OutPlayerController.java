@@ -9,6 +9,8 @@ import util.annotation.RequestMethod;
 
 import java.util.HashMap;
 
+import static util.messages.ErrorMessage.ERR_MSG_ILLEGAL_PARAMETER;
+
 @Controller
 public class OutPlayerController implements BaseballController {
 
@@ -33,10 +35,8 @@ public class OutPlayerController implements BaseballController {
     }
 
     @Override
-    public boolean validateParameter(HashMap<String, String> map) {
-        if (map.containsKey("playerId") && map.containsKey("reason"))
-            return true;
-
-        throw new IllegalParameterException("알맞은 파라미터명이 아닙니다.");
+    public void validateParameter(HashMap<String, String> map) {
+        if (!(map.containsKey("playerId") && map.containsKey("reason")))
+            throw new IllegalParameterException(ERR_MSG_ILLEGAL_PARAMETER);
     }
 }

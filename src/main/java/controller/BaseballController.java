@@ -15,7 +15,7 @@ public interface BaseballController {
 
     };
 
-    boolean validateParameter(HashMap<String, String> map);
+    void validateParameter(HashMap<String, String> map);
 
     default HashMap<String, String> parameterParser(String queryString) throws IllegalParameterException {
         HashMap<String, String> map = new HashMap<>();
