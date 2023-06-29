@@ -15,9 +15,5 @@
         from player as p left join out_player as o
         on p.id = o.player_id
     </select>
-    
-    <update id="updateById">
-        update player set team_id = null where id = #{id}
-    </update>
 
 </mapper>

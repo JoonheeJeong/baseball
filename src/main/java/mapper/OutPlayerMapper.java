@@ -10,5 +10,4 @@ public interface OutPlayerMapper {
 
     List<OutPlayerResponseDTO> selectAll();
 
-    void updateById(Long id);
 }
