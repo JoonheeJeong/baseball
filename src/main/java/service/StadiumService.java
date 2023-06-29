@@ -21,38 +21,33 @@ public class StadiumService implements BaseBallService {
 
     private StadiumService() {
         stadiumDao = StadiumDao.getInstance();
+        try {
+            stadiumDao.setSqlSessionFactory(get());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static StadiumService getInstance() {
+    public static BaseBallService getInstance() {
         if (INSTANCE == null)
             INSTANCE = new StadiumService();
-
         return INSTANCE;
     }
 
     public void register(HashMap<String, String> map) {
         try {
-            stadiumDao.setSqlSessionFactory(get());
             Stadium stadium = Stadium.builder().name(map.get("name")).build();
             stadiumDao.insert(stadium, true);
             stadiumDao.commit();
             log.info(ResponseMessage.SERVICE_SUCCESS);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         } catch (PersistenceException e) {
             log.warn(ErrorMessage.ERR_MSG_DUPLICATE_PARAMETER);
         }
     }
 
     public void show() {
-        try {
-            stadiumDao.setSqlSessionFactory(get());
-            List<Stadium> stadiumList = stadiumDao.selectAll();
-            for (Stadium stadium : stadiumList)
-                log.info(stadium);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        List<Stadium> stadiumList = stadiumDao.selectAll();
+        for (Stadium stadium : stadiumList)
+            log.info(stadium);
     }
 }
