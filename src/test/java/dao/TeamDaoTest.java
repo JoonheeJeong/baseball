@@ -1,7 +1,7 @@
 package dao;
 
 import domain.Team;
-import dto.TeamResponseDTO;
+import dto.TeamResponseDto;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ public class TeamDaoTest {
         teamDao.insert(team, true);
 
         assertTrue(teamDao.selectAll().stream()
-                .map(TeamResponseDTO::getTeamName)
+                .map(TeamResponseDto::getTeamName)
                 .anyMatch(name -> name.equals(teamName)));
 
         teamDao.rollback();
@@ -42,17 +42,17 @@ public class TeamDaoTest {
 
     @Test
     void selectAll() {
-        List<TeamResponseDTO> teamList = teamDao.selectAll();
+        List<TeamResponseDto> teamList = teamDao.selectAll();
         log.info(teamList);
 
         assertTrue(teamList.stream()
-                .map(TeamResponseDTO::getTeamName)
+                .map(TeamResponseDto::getTeamName)
                 .anyMatch(name -> name.equals("한화 이글스")));
         assertTrue(teamList.stream()
-                .map(TeamResponseDTO::getTeamName)
+                .map(TeamResponseDto::getTeamName)
                 .anyMatch(name -> name.equals("두산 베어스")));
         assertTrue(teamList.stream()
-                .map(TeamResponseDTO::getTeamName)
+                .map(TeamResponseDto::getTeamName)
                 .anyMatch(name -> name.equals("롯데 자이언츠")));
     }
 }

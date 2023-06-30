@@ -1,13 +1,13 @@
 package mapper;
 
 import domain.OutPlayer;
-import dto.OutPlayerResponseDTO;
+import dto.OutPlayerResponseDto;
 
 import java.util.List;
 
 public interface OutPlayerMapper {
     void insert(OutPlayer outPlayer);
 
-    List<OutPlayerResponseDTO> selectAll();
+    List<OutPlayerResponseDto> selectAll();
 
 }
