@@ -91,10 +91,11 @@ public class ConsoleScanner {
                     RequestMapping requestMapping = mt.getDeclaredAnnotation(RequestMapping.class);
                     if (requestMapping != null && requestMapping.uri().equals(uri)) {
                         Object instance = cls.getDeclaredConstructor().newInstance();
-                        if (queryString != null)
-                            mt.invoke(instance, queryString);
-                        else
+                        try {
                             mt.invoke(instance);
+                        } catch (IllegalArgumentException e) {
+                            mt.invoke(instance, queryString);
+                        }
                         return;
                     }
                 }
