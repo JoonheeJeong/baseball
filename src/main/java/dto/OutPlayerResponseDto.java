@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @ToString
-public class OutPlayerResponseDTO {
+public class OutPlayerResponseDto {
     private Long id;
     private String name;
     private Position position;

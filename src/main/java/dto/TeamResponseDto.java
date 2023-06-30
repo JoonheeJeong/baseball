@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @ToString
-public class TeamResponseDTO {
+public class TeamResponseDto {
     private String teamName;
     private LocalDateTime teamCreatedAt;
     private String stadiumName;
