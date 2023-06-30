@@ -21,7 +21,7 @@ public class StadiumController implements BaseballController {
 
     @Override
     @RequestMapping(uri = "야구장등록", method = RequestMethod.POST)
-    public void insert(String queryString) {
+    public void add(String queryString) {
         HashMap<String, String> map = parameterParser(queryString);
         validateParameter(map);
         stadiumService.register(map);
@@ -29,7 +29,7 @@ public class StadiumController implements BaseballController {
 
     @Override
     @RequestMapping(uri = "야구장목록", method = RequestMethod.GET)
-    public void select() {
+    public void showList() {
         stadiumService.show();
     }
 
