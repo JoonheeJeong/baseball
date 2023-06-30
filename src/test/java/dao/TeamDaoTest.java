@@ -5,8 +5,8 @@ import dto.TeamResponseDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import util.SqlSessionFactoryUtil;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,9 +17,9 @@ public class TeamDaoTest {
     static TeamDao teamDao;
 
     @BeforeAll
-    static void initAll() throws IOException {
+    static void initAll() {
         teamDao = TeamDao.getInstance();
-        teamDao.setSqlSessionFactory(SqlSessionFactoryUtil.get());
+        teamDao.setSqlSessionFactory(SqlSessionFactoryUtil.getSqlSessionFactory());
     }
 
     @Test
