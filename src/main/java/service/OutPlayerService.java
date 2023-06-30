@@ -4,7 +4,7 @@ import dao.OutPlayerDao;
 import dao.PlayerDao;
 import domain.OutPlayer;
 import domain.Reason;
-import dto.OutPlayerResponseDTO;
+import dto.OutPlayerResponseDto;
 import lombok.extern.log4j.Log4j2;
 import util.messages.ErrorMessage;
 import util.messages.ResponseMessage;
@@ -56,8 +56,8 @@ public class OutPlayerService implements BaseBallService {
 
     @Override
     public void show() {
-        List<OutPlayerResponseDTO> outPlayerList = outPlayerDao.selectAll();
-        for (OutPlayerResponseDTO outPlayer : outPlayerList)
+        List<OutPlayerResponseDto> outPlayerList = outPlayerDao.selectAll();
+        for (OutPlayerResponseDto outPlayer : outPlayerList)
             log.info(outPlayer);
     }
 }

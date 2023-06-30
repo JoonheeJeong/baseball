@@ -9,7 +9,7 @@
         insert into team (stadium_id, name) values (#{stadiumId}, #{name})
     </insert>
 
-    <select id="selectAll" resultType="dto.TeamResponseDTO">
+    <select id="selectAll" resultType="dto.TeamResponseDto">
         select t.name as teamName,
                t.created_at as teamCreatedAt,
                s.name as stadiumName,
