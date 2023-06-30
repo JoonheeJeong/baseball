@@ -3,12 +3,14 @@ package service;
 import dao.PlayerDao;
 import domain.Player;
 import domain.Position;
+import dto.PositionTeamPlayerDto;
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.exceptions.PersistenceException;
 import util.messages.ErrorMessage;
 import util.messages.ResponseMessage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,5 +62,14 @@ public class PlayerService implements BaseBallService {
             List<Player> playerList = playerDao.selectListByTeamId(Long.valueOf(map.get("teamId")));
             for (Player player : playerList)
                 log.info(player);
+    }
+
+    public void showByPosition() {
+        try {
+            PositionTeamPlayerDto positionDto= playerDao.selectListForEachTeamByPosition();
+            log.info(positionDto);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
