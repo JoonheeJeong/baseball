@@ -23,6 +23,12 @@ public class OutPlayerService implements BaseBallService {
     private OutPlayerService() {
         outPlayerDao = OutPlayerDao.getInstance();
         playerDao = PlayerDao.getInstance();
+        try {
+            playerDao.setSqlSessionFactory(get());
+            outPlayerDao.setSqlSessionFactory(get());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static OutPlayerService getInstance() {
@@ -34,39 +40,27 @@ public class OutPlayerService implements BaseBallService {
 
     @Override
     public void register(HashMap<String, String> map) {
+        OutPlayer outPlayer = OutPlayer.builder()
+                .playerId(Long.valueOf(map.get("playerId")))
+                .reason(Reason.getByDescription(map.get("reason")))
+                .build();
         try {
-            outPlayerDao.setSqlSessionFactory(get());
-            playerDao.setSqlSessionFactory(get());
-            OutPlayer outPlayer = OutPlayer.builder()
-                    .playerId(Long.valueOf(map.get("playerId")))
-                    .reason(Reason.getByDescription(map.get("reason")))
-                    .build();
-            try {
-                outPlayerDao.insert(outPlayer, true);
-                outPlayerDao.commit();
-                playerDao.updateRetiredById(Long.valueOf(map.get("playerId")), true);
-                playerDao.commit();
-                log.info(ResponseMessage.SERVICE_SUCCESS);
-            } catch (Exception e) {
-                outPlayerDao.rollback();
-                log.warn(ErrorMessage.ERR_MSG_TRANSACTION);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            outPlayerDao.insert(outPlayer, true);
+            outPlayerDao.commit();
+            playerDao.updateRetiredById(Long.valueOf(map.get("playerId")), true);
+            playerDao.commit();
+            log.info(ResponseMessage.SERVICE_SUCCESS);
+        } catch (Exception e) {
+            outPlayerDao.rollback();
+            playerDao.rollback();
+            log.warn(ErrorMessage.ERR_MSG_TRANSACTION);
         }
     }
 
     @Override
     public void show() {
-        try {
-            outPlayerDao.setSqlSessionFactory(get());
-            List<OutPlayerResponseDTO> outPlayerList = outPlayerDao.selectAll();
-            for (OutPlayerResponseDTO outPlayer : outPlayerList)
-                log.info(outPlayer);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        List<OutPlayerResponseDTO> outPlayerList = outPlayerDao.selectAll();
+        for (OutPlayerResponseDTO outPlayer : outPlayerList)
+            log.info(outPlayer);
     }
 }

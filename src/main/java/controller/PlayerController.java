@@ -13,7 +13,7 @@ import static util.messages.ErrorMessage.ERR_MSG_ILLEGAL_PARAMETER;
 
 @Controller
 public class PlayerController implements BaseballController {
-    private final BaseBallService playerService;
+    private final PlayerService playerService;
 
     public PlayerController() {
         this.playerService = PlayerService.getInstance();
@@ -37,6 +37,11 @@ public class PlayerController implements BaseballController {
     public void select(String queryString) {
         HashMap<String, String> map = parameterParser(queryString);
         playerService.show(map);
+    }
+
+    @RequestMapping(uri = "포지션별목록", method = RequestMethod.GET)
+    public void selectByPosition() {
+        playerService.showByPosition();
     }
 
     @Override

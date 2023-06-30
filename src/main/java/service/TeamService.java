@@ -20,6 +20,11 @@ public class TeamService implements BaseBallService {
 
     private TeamService() {
         teamDao = TeamDao.getInstance();
+        try {
+            teamDao.setSqlSessionFactory(get());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static TeamService getInstance() {
@@ -32,7 +37,6 @@ public class TeamService implements BaseBallService {
     @Override
     public void register(HashMap<String, String> map) {
         try {
-            teamDao.setSqlSessionFactory(get());
             Team team = Team.builder()
                     .stadiumId(Long.valueOf(map.get("stadiumId")))
                     .name(map.get("name"))
@@ -40,8 +44,6 @@ public class TeamService implements BaseBallService {
             teamDao.insert(team, true);
             teamDao.commit();
             log.info(ResponseMessage.SERVICE_SUCCESS);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         } catch (PersistenceException e) {
             log.warn(ErrorMessage.ERR_MSG_DUPLICATE_PARAMETER);
         }
@@ -49,14 +51,8 @@ public class TeamService implements BaseBallService {
 
     @Override
     public void show() {
-        try {
-            teamDao.setSqlSessionFactory(get());
             List<TeamResponseDTO> teamList = teamDao.selectAll();
             for (TeamResponseDTO teamResponseDTO : teamList)
                 log.info(teamResponseDTO);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

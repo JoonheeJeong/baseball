@@ -18,7 +18,7 @@ public class StadiumServiceTest {
     @BeforeAll
     static
     void init() {
-        stadiumService = StadiumService.getInstance();
+        stadiumService = (StadiumService) StadiumService.getInstance();
         stadiumDao = StadiumDao.getInstance();
         map = new HashMap<>();
     }
