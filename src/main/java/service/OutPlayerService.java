@@ -9,9 +9,10 @@ import lombok.extern.log4j.Log4j2;
 import util.messages.ErrorMessage;
 import util.messages.ResponseMessage;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+
+import static util.SqlSessionFactoryUtil.getSqlSessionFactory;
 
 @Log4j2
 public class OutPlayerService implements BaseBallService {
@@ -23,12 +24,8 @@ public class OutPlayerService implements BaseBallService {
     private OutPlayerService() {
         outPlayerDao = OutPlayerDao.getInstance();
         playerDao = PlayerDao.getInstance();
-        try {
-            playerDao.setSqlSessionFactory(get());
-            outPlayerDao.setSqlSessionFactory(get());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        playerDao.setSqlSessionFactory(getSqlSessionFactory());
+        outPlayerDao.setSqlSessionFactory(getSqlSessionFactory());
     }
 
     public static OutPlayerService getInstance() {

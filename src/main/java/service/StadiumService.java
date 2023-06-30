@@ -8,9 +8,10 @@ import util.annotation.Service;
 import util.messages.ErrorMessage;
 import util.messages.ResponseMessage;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+
+import static util.SqlSessionFactoryUtil.getSqlSessionFactory;
 
 @Log4j2
 @Service
@@ -21,11 +22,7 @@ public class StadiumService implements BaseBallService {
 
     private StadiumService() {
         stadiumDao = StadiumDao.getInstance();
-        try {
-            stadiumDao.setSqlSessionFactory(get());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        stadiumDao.setSqlSessionFactory(getSqlSessionFactory());
     }
 
     public static BaseBallService getInstance() {
