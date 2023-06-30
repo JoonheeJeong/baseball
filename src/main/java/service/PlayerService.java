@@ -9,10 +9,11 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import util.messages.ErrorMessage;
 import util.messages.ResponseMessage;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+
+import static util.SqlSessionFactoryUtil.getSqlSessionFactory;
 
 @Log4j2
 public class PlayerService implements BaseBallService {
@@ -22,11 +23,7 @@ public class PlayerService implements BaseBallService {
 
     private PlayerService() {
         playerDao = PlayerDao.getInstance();
-        try {
-            playerDao.setSqlSessionFactory(get());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        playerDao.setSqlSessionFactory(getSqlSessionFactory());
     }
 
     public static PlayerService getInstance() {
