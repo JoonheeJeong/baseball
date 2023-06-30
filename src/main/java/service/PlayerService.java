@@ -20,6 +20,11 @@ public class PlayerService implements BaseBallService {
 
     private PlayerService() {
         playerDao = PlayerDao.getInstance();
+        try {
+            playerDao.setSqlSessionFactory(get());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static PlayerService getInstance() {
@@ -32,7 +37,6 @@ public class PlayerService implements BaseBallService {
     @Override
     public void register(HashMap<String, String> map) {
         try {
-            playerDao.setSqlSessionFactory(get());
             Player player = Player.builder()
                     .teamId(Long.valueOf(map.get("teamId")))
                     .name(map.get("name"))
@@ -43,8 +47,6 @@ public class PlayerService implements BaseBallService {
             log.info(ResponseMessage.SERVICE_SUCCESS);
         } catch (PersistenceException e) {
             log.warn(ErrorMessage.ERR_MSG_DUPLICATE_POSITION);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -55,14 +57,8 @@ public class PlayerService implements BaseBallService {
 
     @Override
     public void show(HashMap<String, String> map) {
-        try {
-            playerDao.setSqlSessionFactory(get());
             List<Player> playerList = playerDao.selectListByTeamId(Long.valueOf(map.get("teamId")));
             for (Player player : playerList)
                 log.info(player);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
