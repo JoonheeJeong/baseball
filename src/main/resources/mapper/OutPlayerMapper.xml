@@ -10,7 +10,7 @@
         insert into out_player (player_id, reason) values (#{playerId}, #{reason})
     </insert>
 
-    <select id="selectAll" resultType="dto.OutPlayerResponseDTO">
+    <select id="selectAll" resultType="dto.OutPlayerResponseDto">
         select p.id as id, p.name as name, p.position as position, o.reason as reason, o.created_at as createdAt
         from player as p left join out_player as o
         on p.id = o.player_id

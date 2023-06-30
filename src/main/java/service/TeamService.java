@@ -2,7 +2,7 @@ package service;
 
 import dao.TeamDao;
 import domain.Team;
-import dto.TeamResponseDTO;
+import dto.TeamResponseDto;
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.exceptions.PersistenceException;
 import util.messages.ErrorMessage;
@@ -48,8 +48,8 @@ public class TeamService implements BaseBallService {
 
     @Override
     public void show() {
-            List<TeamResponseDTO> teamList = teamDao.selectAll();
-            for (TeamResponseDTO teamResponseDTO : teamList)
+            List<TeamResponseDto> teamList = teamDao.selectAll();
+            for (TeamResponseDto teamResponseDTO : teamList)
                 log.info(teamResponseDTO);
     }
 }
