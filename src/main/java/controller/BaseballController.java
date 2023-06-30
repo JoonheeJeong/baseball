@@ -7,13 +7,10 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public interface BaseballController {
-    void insert(String queryString);
 
-    void select();
+    void add(String queryString);
 
-    default void select(String queryString) {
-
-    };
+    void showList();
 
     void validateParameter(HashMap<String, String> map);
 

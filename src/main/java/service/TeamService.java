@@ -8,9 +8,10 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import util.messages.ErrorMessage;
 import util.messages.ResponseMessage;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+
+import static util.SqlSessionFactoryUtil.getSqlSessionFactory;
 
 @Log4j2
 public class TeamService implements BaseBallService {
@@ -20,11 +21,7 @@ public class TeamService implements BaseBallService {
 
     private TeamService() {
         teamDao = TeamDao.getInstance();
-        try {
-            teamDao.setSqlSessionFactory(get());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        teamDao.setSqlSessionFactory(getSqlSessionFactory());
     }
 
     public static TeamService getInstance() {

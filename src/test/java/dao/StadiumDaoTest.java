@@ -5,8 +5,8 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import util.SqlSessionFactoryUtil;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,9 +17,9 @@ public class StadiumDaoTest {
     static StadiumDao stadiumDao;
 
     @BeforeAll
-    static void init() throws IOException {
+    static void init() {
         stadiumDao = StadiumDao.getInstance();
-        stadiumDao.setSqlSessionFactory(SqlSessionFactoryUtil.get());
+        stadiumDao.setSqlSessionFactory(SqlSessionFactoryUtil.getSqlSessionFactory());
     }
 
     @AfterEach

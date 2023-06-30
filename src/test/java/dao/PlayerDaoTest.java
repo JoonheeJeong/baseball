@@ -6,8 +6,8 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import util.SqlSessionFactoryUtil;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
@@ -24,9 +24,9 @@ public class PlayerDaoTest {
     static PlayerDao playerDao;
 
     @BeforeAll
-    static void initAll() throws IOException {
+    static void initAll() {
         playerDao = PlayerDao.getInstance();
-        playerDao.setSqlSessionFactory(SqlSessionFactoryUtil.get());
+        playerDao.setSqlSessionFactory(SqlSessionFactoryUtil.getSqlSessionFactory());
 
         playerToInsert = Player.builder()
                 .name(playerName)

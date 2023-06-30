@@ -22,7 +22,7 @@ public class TeamController implements BaseballController {
 
     @Override
     @RequestMapping(uri = "팀등록", method = RequestMethod.POST)
-    public void insert(String queryString) {
+    public void add(String queryString) {
         HashMap<String, String> map = parameterParser(queryString);
         validateParameter(map);
         teamService.register(map);
@@ -30,7 +30,7 @@ public class TeamController implements BaseballController {
 
     @Override
     @RequestMapping(uri = "팀목록", method = RequestMethod.GET)
-    public void select() {
+    public void showList() {
         teamService.show();
     }
 
