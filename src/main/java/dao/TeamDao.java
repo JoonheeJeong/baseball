@@ -3,7 +3,6 @@ package dao;
 import domain.Team;
 import dto.TeamResponseDto;
 import mapper.TeamMapper;
-import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 
@@ -16,11 +15,6 @@ public class TeamDao extends AbstractMybatisDao {
 
     public static TeamDao getInstance() {
         return INSTANCE;
-    }
-
-    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
-        this.sqlSessionFactory = sqlSessionFactory;
-        session = sqlSessionFactory.openSession();
     }
 
     public void insert(Team team, boolean newSession) {

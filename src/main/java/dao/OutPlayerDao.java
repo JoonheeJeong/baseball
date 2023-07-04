@@ -11,7 +11,6 @@ public class OutPlayerDao extends AbstractMybatisDao {
     private static final OutPlayerDao INSTANCE = new OutPlayerDao();
 
     private OutPlayerDao() {
-
     }
 
     public static OutPlayerDao getInstance() {
@@ -24,6 +23,8 @@ public class OutPlayerDao extends AbstractMybatisDao {
 
         OutPlayerMapper mapper = session.getMapper(OutPlayerMapper.class);
         mapper.insert(outPlayer);
+
+        PlayerDao.getInstance().session = session;
     }
 
     public List<OutPlayerResponseDto> selectAll() {
