@@ -67,10 +67,7 @@ public class PlayerDao extends AbstractMybatisDao {
                 .build();
     }
 
-    public void updateRetiredById(Long id, boolean newSession) {
-        if (newSession)
-            manageNewSession();
-
+    public void updateRetiredById(Long id) {
         PlayerMapper mapper = session.getMapper(PlayerMapper.class);
         mapper.updateRetiredById(id);
     }
