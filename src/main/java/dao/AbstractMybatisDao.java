@@ -5,7 +5,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 public abstract class AbstractMybatisDao {
 
-    protected SqlSessionFactory sqlSessionFactory;
+    private SqlSessionFactory sqlSessionFactory;
     protected SqlSession session;
 
     public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {

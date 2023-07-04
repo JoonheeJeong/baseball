@@ -55,12 +55,14 @@ public class PlayerDaoTest {
 
     @Test
     void selectListByTeamId() {
-        final Long teamIdToSearch = 1L;
+        final Long[] teamIdToSearch = { 1L, 4L };
+        final int[] numPlayersOfTeam = { 9,  1 };
 
-        List<Player> playerList = playerDao.selectListByTeamId(teamIdToSearch);
-
-        assertEquals(9, playerList.size());
-        assertEquals(teamIdToSearch, playerList.get(0).getTeamId());
+        for (int i = 0; i < 2; ++i) {
+            List<Player> playerList = playerDao.selectListByTeamId(teamIdToSearch[i]);
+            assertEquals(numPlayersOfTeam[i], playerList.size());
+            assertEquals(teamIdToSearch[i], playerList.get(0).getTeamId());
+        }
     }
 
     @Test
@@ -81,7 +83,7 @@ public class PlayerDaoTest {
     void updateRetiredById() {
         final Long retiredPlayerId = 28L;
 
-        playerDao.updateRetiredById(retiredPlayerId, true);
+        playerDao.updateRetiredById(retiredPlayerId);
 
         List<Player> playerList = playerDao.selectListByTeamId(4L);
         Optional<Long> idOptional = playerList.stream()

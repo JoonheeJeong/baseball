@@ -51,3 +51,4 @@ select * from team;
 select * from position_t;
 select * from player;
 select * from position_team_player;
+select * from out_player;

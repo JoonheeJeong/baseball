@@ -41,7 +41,7 @@ create table player (
 
 create table out_player (
     id          bigint          auto_increment,
-    player_id   bigint          not null,
+    player_id   bigint          not null unique,
     reason      varchar(16),
     created_at  timestamp       not null default now(),
     primary key (id),

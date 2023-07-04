@@ -43,7 +43,7 @@ public class OutPlayerService implements BaseBallService {
                 .build();
         try {
             outPlayerDao.insert(outPlayer, true);
-            playerDao.updateRetiredById(Long.valueOf(map.get("playerId")), true);
+            playerDao.updateRetiredById(Long.valueOf(map.get("playerId")));
             playerDao.commit();
             outPlayerDao.commit();
             log.info(ResponseMessage.SERVICE_SUCCESS);
